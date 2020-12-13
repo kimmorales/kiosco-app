@@ -9,14 +9,14 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-class MyListView extends ArrayAdapter<String> {
+class ProviderItem extends ArrayAdapter<String> {
 
     private final Activity context;
     private final String[] maintitle;
     private final Integer[] imgid;
 
-    public MyListView(Activity context, String[] maintitle, Integer[] imgid) {
-        super(context, R.layout.mylist, maintitle);
+    public ProviderItem(Activity context, String[] maintitle, Integer[] imgid) {
+        super(context, R.layout.fragment_provider_item, maintitle);
         // TODO Auto-generated constructor stub
 
         this.context=context;
@@ -27,7 +27,7 @@ class MyListView extends ArrayAdapter<String> {
 
     public View getView(int position,View view,ViewGroup parent) {
         LayoutInflater inflater=context.getLayoutInflater();
-        View rowView=inflater.inflate(R.layout.mylist, null,true);
+        View rowView=inflater.inflate(R.layout.fragment_provider_item, null,true);
 
         TextView titleText = (TextView) rowView.findViewById(R.id.title);
         ImageView imageView = (ImageView) rowView.findViewById(R.id.icon);
