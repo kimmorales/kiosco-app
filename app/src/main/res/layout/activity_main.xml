@@ -3,14 +3,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.kioscoapp.MainActivity"  android:padding="20dp">
+    tools:context="com.example.kioscoapp.ProvidersActivity"  android:padding="20dp">
 
     <TextView
         android:id="@+id/id"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:text="@string/Selecciona_tu_proveedor_de_servicio"
+        android:text="@string/seleccione_proveedor_de_servicio"
         android:textSize="18sp"
         android:textStyle="bold" />
 

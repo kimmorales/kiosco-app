@@ -14,7 +14,7 @@ public class SelectedProviderActivity extends AppCompatActivity {
 
         // Get the Intent that started this activity and extract the string
         Intent intent = getIntent();
-        String message = intent.getStringExtra(MainActivity.SELECTED_INDEX);
+        String message = intent.getStringExtra(ProvidersActivity.SELECTED_INDEX);
 
         // Capture the layout's TextView and set the string as its text
         TextView textView = findViewById(R.id.textView);

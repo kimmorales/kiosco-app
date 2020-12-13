@@ -11,7 +11,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class MainActivity extends AppCompatActivity {
+public class ProvidersActivity extends AppCompatActivity {
     public static final String SELECTED_INDEX = "";
     ListView list;
     String selectedIndex = "0";
