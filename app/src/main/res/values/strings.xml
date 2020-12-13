@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Kiosco App</string>
+    <string name="Selecciona_tu_proveedor_de_servicio">Selecciona tu proveedor de servicio</string>
+    <string name="proveedor_de_Servicio">Proveedor de servicio</string>
+    <string name="seleccione_monto">Seleccione el monto que desea recargar</string>
+    <string name="cancelar">Cancelar</string>
+    <string name="agregar_carrito">Agregar al carrito</string>
 </resources>
