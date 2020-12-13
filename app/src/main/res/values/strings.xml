@@ -5,4 +5,8 @@
     <string name="seleccione_monto">Seleccione el monto que desea recargar</string>
     <string name="cancelar">Cancelar</string>
     <string name="agregar_carrito">Agregar al carrito</string>
+    <string name="recargas" />
+    <string name="carrito_de_servicios" />
+    <string name="facturas_por_pagar" />
+    <string name="consultar_otro_servicio" />
 </resources>
