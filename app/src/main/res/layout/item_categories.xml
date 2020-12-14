@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="15dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -12,23 +13,23 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-            <FrameLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                app:civ_border_color="@color/colorOrange"
+                app:civ_border_width="2dp"
                 android:layout_gravity="center_horizontal"
-                android:background="@drawable/shape_rounded_orange">
-                <ImageView
-                    android:layout_width="60dp"
-                    android:background="@drawable/ic_launcher_background"
-                    android:layout_height="60dp">
-
-                </ImageView>
-            </FrameLayout>
-
+                android:id="@+id/cvImageCategorie"
+                ></de.hdodenhof.circleimageview.CircleImageView>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Servicios Publicos"
+                android:id="@+id/tvNameCategorie"
+                android:layout_gravity="center_horizontal"
+                android:lines="2"
+                android:textAlignment="center"
                 android:textSize="20dp"></TextView>
         </LinearLayout>
     </FrameLayout>

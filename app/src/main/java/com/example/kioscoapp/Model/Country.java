@@ -1,27 +1,21 @@
 package com.example.kioscoapp.Model;
 
 public class Country {
-    private String name;
-    private long id;
+
+    private String Country_Id;
     private String type;
-    private String code;
-    private String currency;
-    private String DistrictId;
+    private long Country_Code;
+    private String Currency;
+    private String Description;
 
-    public String getName() {
-        return name;
+
+
+    public String getCountry_Id() {
+        return Country_Id;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
+    public void setCountry_Id(String country_Id) {
+        Country_Id = country_Id;
     }
 
     public String getType() {
@@ -32,27 +26,27 @@ public class Country {
         this.type = type;
     }
 
-    public String getCode() {
-        return code;
+    public long getCountry_Code() {
+        return Country_Code;
     }
 
-    public void setCode(String code) {
-        this.code = code;
+    public void setCountry_Code(long country_Code) {
+        Country_Code = country_Code;
     }
 
     public String getCurrency() {
-        return currency;
+        return Currency;
     }
 
     public void setCurrency(String currency) {
-        this.currency = currency;
+        Currency = currency;
     }
 
-    public String getDistrictId() {
-        return DistrictId;
+    public String getDescription() {
+        return Description;
     }
 
-    public void setDistrictId(String districtId) {
-        DistrictId = districtId;
+    public void setDescription(String description) {
+        Description = description;
     }
 }
