@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="24sp"
-    tools:context="com.example.kioscoapp.ProvidersActivity">
+    tools:context=".Views.ProvidersActivity">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -19,17 +19,16 @@
             android:textSize="24sp">
 
         </TextView>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rcvProviders"
+            android:layout_width="370dp"
+            android:layout_height="598dp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="50dp"></androidx.recyclerview.widget.RecyclerView>
     </LinearLayout>
 
-    <ListView
-        android:id="@+id/list"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="80dp"
-        android:layout_marginBottom="50dp"
 
-        >
 
-    </ListView>
 
 </RelativeLayout>

@@ -1,13 +1,13 @@
 package com.example.kioscoapp;
 
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
-import android.media.Image;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.kioscoapp.Views.ProvidersActivity;
 
 public class SelectedProviderActivity extends AppCompatActivity {
     @Override

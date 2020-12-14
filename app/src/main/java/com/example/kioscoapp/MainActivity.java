@@ -9,6 +9,7 @@ import com.example.kioscoapp.Services.Local.CountryLocalService;
 import com.example.kioscoapp.Views.CategoriesFragment;
 import com.example.kioscoapp.Views.CountrySelectedFragment;
 import com.example.kioscoapp.Views.InitialScreenFragment;
+import com.example.kioscoapp.Views.ProvidersActivity;
 
 public class MainActivity extends AppCompatActivity implements
         CountrySelectedFragment.OnListener,
@@ -26,7 +27,7 @@ public class MainActivity extends AppCompatActivity implements
         CountryLocalService localService= new CountryLocalService(this);
 
         if(localService.getCountry() !="0" && localService.getFormat()!="0"){
-            changeFragment(InitialScreenFragment.newInstance());
+            changeFragment(ProvidersActivity.newInstance());
         }else{
             changeFragment(CountrySelectedFragment.newInstance());
         }
