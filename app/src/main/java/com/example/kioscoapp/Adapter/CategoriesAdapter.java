@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.kioscoapp.Model.CategoriesMoneyCenter;
@@ -22,10 +23,13 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.Ca
 
     Context context;
     ArrayList<CategoriesMoneyCenter> categories;
+    OnListener onListener;
 
-    public CategoriesAdapter(Context context, ArrayList<CategoriesMoneyCenter> categories) {
+
+    public CategoriesAdapter(Context context, ArrayList<CategoriesMoneyCenter> categories,OnListener onListener) {
         this.context = context;
         this.categories = categories;
+        this.onListener=onListener;
     }
 
     @NonNull
@@ -41,7 +45,11 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.Ca
     public void onBindViewHolder(@NonNull CategoriesViewHolder holder, int position) {
         CategoriesMoneyCenter category=categories.get(position);
         holder.textViewName.setText(category.getName());
-        Picasso.get().load(category.getLogo()).into(holder.circleImage);
+        holder.bind(category,onListener);
+        if(!category.getLogo().isEmpty() && category.getLogo()!=null){
+            Picasso.get().load(category.getLogo()).into(holder.circleImage);
+        }
+
     }
 
     @Override
@@ -53,11 +61,27 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.Ca
 
         TextView textViewName;
         CircleImageView circleImage;
+        CardView cardViewItem;
 
         public CategoriesViewHolder(@NonNull View itemView) {
             super(itemView);
             textViewName=itemView.findViewById(R.id.tvNameCategorie);
             circleImage=itemView.findViewById(R.id.cvImageCategorie);
+            cardViewItem=itemView.findViewById(R.id.cvItemCategory);
+
         }
+
+        public void bind(final CategoriesMoneyCenter category,final OnListener listener){
+            cardViewItem.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    listener.onItemClick(category);
+                }
+            });
+        }
+    }
+
+    public interface OnListener{
+        void onItemClick(CategoriesMoneyCenter category);
     }
 }
