@@ -9,4 +9,5 @@
     <string name="carrito_de_servicios" />
     <string name="facturas_por_pagar" />
     <string name="consultar_otro_servicio" />
+    <string name="local_variable_country">country</string>
 </resources>

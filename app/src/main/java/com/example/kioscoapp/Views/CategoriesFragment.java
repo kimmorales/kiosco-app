@@ -3,12 +3,26 @@ package com.example.kioscoapp.Views;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.SearchView;
 
+import com.example.kioscoapp.Adapter.CategoriesAdapter;
+import com.example.kioscoapp.Model.CategoriesMoneyCenter;
+import com.example.kioscoapp.Model.ResponseCategories;
 import com.example.kioscoapp.R;
+import com.example.kioscoapp.Services.CategoryMoneyCenterService;
+
+import java.util.ArrayList;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -17,12 +31,13 @@ import com.example.kioscoapp.R;
  */
 public class CategoriesFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    RecyclerView recyclerViewCat;
+    EditText searchView;
 
-    // TODO: Rename and change types of parameters
+
     private String mParam1;
     private String mParam2;
 
@@ -48,6 +63,28 @@ public class CategoriesFragment extends Fragment {
         return fragment;
     }
 
+    public  void getCategories(){
+        CategoryMoneyCenterService categorySer=new CategoryMoneyCenterService();
+        categorySer.loadCategories(getContext()).enqueue(new Callback<ResponseCategories>() {
+            @Override
+            public void onResponse(Call<ResponseCategories> call, Response<ResponseCategories> response) {
+                if(response.isSuccessful() && response.body().getData().size()>0){
+                    setCategories(response.body().getData());
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<ResponseCategories> call, Throwable t) {
+                System.out.println("error");
+            }
+        });
+    }
+
+    private void setCategories(ArrayList<CategoriesMoneyCenter> categories){
+        recyclerViewCat.setAdapter(new CategoriesAdapter(getContext(),categories));
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,6 +98,13 @@ public class CategoriesFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_categories, container, false);
+        View v= inflater.inflate(R.layout.fragment_categories, container, false);
+        recyclerViewCat=v.findViewById(R.id.rvCategories);
+        GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 2);
+        recyclerViewCat.setHasFixedSize(true);
+        recyclerViewCat.setLayoutManager(layoutManager);
+        searchView=v.findViewById(R.id.svCategories);
+        getCategories();
+        return  v;
     }
 }
