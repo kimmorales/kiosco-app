@@ -11,7 +11,7 @@
         android:theme="@style/AppTheme">
         <activity android:name=".PaymentCodeActivity"></activity>
         <activity android:name=".ShoppingCartActivity" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".ProvidersActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
