@@ -1,4 +1,4 @@
-package com.example.kioscoapp;
+package com.example.kioscoapp.Adapter;
 
 import android.content.Context;
 import android.text.Layout;
@@ -7,6 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
+
+import com.example.kioscoapp.R;
 
 import java.util.ArrayList;
 

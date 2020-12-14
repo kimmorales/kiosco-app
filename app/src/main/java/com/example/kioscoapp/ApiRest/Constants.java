@@ -5,6 +5,8 @@ public class Constants {
     public static final String ENV="dev";
 
     public static final String SHARED_PREFERENCES_INITIAL="country";
+    public static final String SHARED_PREFERENCES_CAR="sharedCar";
+
     public static final String LOCAL_VARIABLE_COUNTRY="country";
     public static final String LOCAL_VARIABLE_FORMAT="format";
 

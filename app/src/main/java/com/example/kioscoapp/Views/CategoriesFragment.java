@@ -2,6 +2,7 @@ package com.example.kioscoapp.Views;
 
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -36,6 +37,7 @@ public class CategoriesFragment extends Fragment {
     private static final String ARG_PARAM2 = "param2";
     RecyclerView recyclerViewCat;
     EditText searchView;
+    OnListener mlistener;
 
 
     private String mParam1;
@@ -81,8 +83,21 @@ public class CategoriesFragment extends Fragment {
         });
     }
 
-    private void setCategories(ArrayList<CategoriesMoneyCenter> categories){
-        recyclerViewCat.setAdapter(new CategoriesAdapter(getContext(),categories));
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        if (getActivity() instanceof OnListener)
+            mlistener = (OnListener) getActivity();
+    }
+
+    private void setCategories(final ArrayList<CategoriesMoneyCenter> categories){
+        recyclerViewCat.setAdapter(new CategoriesAdapter(getContext(), categories, new CategoriesAdapter.OnListener() {
+            @Override
+            public void onItemClick(CategoriesMoneyCenter category) {
+                mlistener.goProvidersActivity(String.valueOf(category.getCategory_Id()));
+                //TODO aqui integrar boton para conectar pantallas de kimberly
+            }
+        }));
     }
 
     @Override
@@ -106,5 +121,9 @@ public class CategoriesFragment extends Fragment {
         searchView=v.findViewById(R.id.svCategories);
         getCategories();
         return  v;
+    }
+
+    public interface OnListener {
+        void goProvidersActivity(String id);
     }
 }

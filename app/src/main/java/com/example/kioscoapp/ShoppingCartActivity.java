@@ -5,10 +5,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Adapter;
 import android.widget.ListView;
 
-import java.util.ArrayList;
+import com.example.kioscoapp.Adapter.CartAdapter;
+import com.example.kioscoapp.Services.Local.CarLocalService;
 
 public class ShoppingCartActivity extends AppCompatActivity {
 
@@ -37,6 +37,7 @@ public class ShoppingCartActivity extends AppCompatActivity {
         lvShoppingCart = (ListView) findViewById(R.id.listShopingCart);
         lvShoppingCart.setDivider(null);
         lvShoppingCart.setAdapter(new CartAdapter(this, data));
+
 
     }
 
