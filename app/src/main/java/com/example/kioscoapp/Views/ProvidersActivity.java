@@ -6,10 +6,9 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -17,6 +16,7 @@ import com.example.kioscoapp.Adapter.ProviderAdapter;
 import com.example.kioscoapp.Model.ResponseServicesByName;
 import com.example.kioscoapp.Model.ServiceByNameMoneyCenter;
 import com.example.kioscoapp.R;
+import com.example.kioscoapp.SelectedProviderActivity;
 import com.example.kioscoapp.Services.ProviderServiceByName;
 
 import java.util.ArrayList;
@@ -29,12 +29,10 @@ public class ProvidersActivity extends Fragment {
     public static final String SELECTED_INDEX = "";
     public static final Integer SELECTED_IMAGE = null;
     private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
     RecyclerView recyclerViewCat;
-
+    OnListener mlistener;
 
     private String mParam1;
-    private String mParam2;
 
     public ProvidersActivity() {
         // Required empty public constructor
@@ -48,20 +46,26 @@ public class ProvidersActivity extends Fragment {
      * @return A new instance of fragment CategoriesFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static ProvidersActivity newInstance() {
+    public static ProvidersActivity newInstance(String id) {
         ProvidersActivity fragment = new ProvidersActivity();
+        Bundle args = new Bundle();
+        args.putString(ARG_PARAM1, id);
+        fragment.setArguments(args);
         return fragment;
     }
 
     public  void getCategories(){
         ProviderServiceByName providerServiceByName=new ProviderServiceByName();
-        providerServiceByName.loadServicesByName(getContext()).enqueue(new Callback<ResponseServicesByName>() {
+        providerServiceByName.loadServicesByName(getContext(),mParam1).enqueue(new Callback<ResponseServicesByName>() {
             @Override
             public void onResponse(Call<ResponseServicesByName> call, Response<ResponseServicesByName> response) {
-                if(response.isSuccessful() && response.body().getData().size()>0){
+                if (response.isSuccessful() && response.body().getData() == null){
+                    //toDo colocar fragmente de error
+                    //System.out.println("ERROR");
+                }
+                else if(response.isSuccessful() && response.body().getData().size()>0){
                     setCategories(response.body().getData());
                 }
-
             }
 
             @Override
@@ -71,8 +75,15 @@ public class ProvidersActivity extends Fragment {
         });
     }
 
-    private void setCategories(ArrayList<ServiceByNameMoneyCenter> categories){
-        recyclerViewCat.setAdapter(new ProviderAdapter(getContext(),categories));
+    private void setCategories(ArrayList<ServiceByNameMoneyCenter> services){
+        recyclerViewCat.setAdapter(new ProviderAdapter(getContext(),services, new ProviderAdapter.OnListener(){
+
+            @Override
+            public void onItemClick(ServiceByNameMoneyCenter service) {
+                mlistener.goToSelectedProvider(service.getDescription(),service.getTag_Input_Data());
+
+            }
+        }));
     }
 
     @Override
@@ -80,10 +91,15 @@ public class ProvidersActivity extends Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
 
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        if (getActivity() instanceof OnListener)
+            mlistener = (OnListener) getActivity();
+    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -92,11 +108,12 @@ public class ProvidersActivity extends Fragment {
        recyclerViewCat=v.findViewById(R.id.rcvProviders);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-       // GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 1);
         recyclerViewCat.setHasFixedSize(true);
         recyclerViewCat.setLayoutManager(layoutManager);
-       // searchView=v.findViewById(R.id.svCategories);
         getCategories();
         return  v;
+    }
+    public interface OnListener {
+        void goToSelectedProvider(String providerName, String tagTitle);
     }
 }

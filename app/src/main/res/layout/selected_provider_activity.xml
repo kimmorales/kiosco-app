@@ -33,13 +33,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
+
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/proveedor_de_servicio"
-                    app:layout_constraintStart_toStartOf="parent"
                     android:textColor="@android:color/black"
-                    android:textSize="24sp"/>
+                    android:textSize="24sp"
+                    app:layout_constraintStart_toStartOf="parent" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -88,14 +89,13 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/textView3"
+                    android:id="@+id/tag_title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/seleccione_monto"
                     app:layout_constraintStart_toStartOf="parent" />
 
                 <EditText
-                    android:id="@+id/editTextNumber"
+                    android:id="@+id/editTextServiceNumber"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ems="10"
@@ -109,12 +109,12 @@
                     android:orientation="horizontal">
 
                     <Button
-                        android:id="@+id/button2"
+                        android:id="@+id/btnCheckPending"
                         style="@style/buttonPrimary"
                         android:layout_width="wrap_content"
                         android:layout_height="40dp"
                         android:gravity="center|clip_vertical"
-                        android:text="@string/agregar_carrito"/>
+                        android:text="@string/consultar_pendientes" />
                 </LinearLayout>
             </LinearLayout>
 

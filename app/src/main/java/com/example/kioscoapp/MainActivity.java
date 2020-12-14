@@ -19,7 +19,8 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity implements
         CountrySelectedFragment.OnListener,
         InitialScreenFragment.OnListener,
-        CategoriesFragment.OnListener{
+       CategoriesFragment.OnListener,
+ProvidersActivity.OnListener{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +33,7 @@ public class MainActivity extends AppCompatActivity implements
     public void validateSelectedCountry(){
         CountryLocalService localService= new CountryLocalService(this);
         if(localService.getCountry() !="0" && localService.getFormat()!="0"){
-            changeFragment(ProvidersActivity.newInstance());
+            changeFragment(InitialScreenFragment.newInstance());
         }else{
             changeFragment(CountrySelectedFragment.newInstance());
         }
@@ -57,11 +58,11 @@ public class MainActivity extends AppCompatActivity implements
 
     @Override
     public void goProvidersActivity(String id) {
-        /*
-        Bundle params = new Bundle();
-        params.putString("idCategory", id);
-        Intent i = new Intent(this, ProvidersActivity.class);
-        i.putExtras(params);
-        startActivity(i);*/
+        changeFragment(ProvidersActivity.newInstance(id));
+    }
+
+    @Override
+    public void goToSelectedProvider(String providerName, String tagTitle) {
+        changeFragment(SelectedProviderActivity.newInstance(providerName,tagTitle));
     }
 }

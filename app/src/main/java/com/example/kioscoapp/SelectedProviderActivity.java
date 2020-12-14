@@ -2,28 +2,56 @@ package com.example.kioscoapp;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.kioscoapp.Views.ProvidersActivity;
 
-public class SelectedProviderActivity extends AppCompatActivity {
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.selected_provider_activity);
+public class SelectedProviderActivity extends Fragment {
+    private static final String PROVIDER_NAME = "param1";
+    private static final String TAG_TITLE = "param2";
+    private String providerName;
+    private String tagTitle;
+    TextView providerNameTextView, tagTitleTextView;
+    Button buttonCheckPending ;
 
-        // Get the Intent that started this activity and extract the string
-        Intent intent = getIntent();
-        String message = intent.getStringExtra(ProvidersActivity.SELECTED_INDEX);
-        String[] image = intent.getStringArrayExtra(String.valueOf(ProvidersActivity.SELECTED_IMAGE));
-
-        // Capture the layout's TextView and set the string as its text
-        TextView textView = findViewById(R.id.providerName);
-        ImageView providerImage = findViewById(R.id.selected_provider_image);
-       // providerImage.setImageAlpha(image);
-        textView.setText(message);
+    public static SelectedProviderActivity newInstance(String providerName, String tagTitle) {
+        SelectedProviderActivity fragment = new SelectedProviderActivity();
+        Bundle args = new Bundle();
+        args.putString(PROVIDER_NAME, providerName);
+        args.putString(TAG_TITLE, tagTitle);
+        fragment.setArguments(args);
+        return fragment;
     }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            providerName = getArguments().getString(PROVIDER_NAME);
+            tagTitle = getArguments().getString(TAG_TITLE);
+        }
+    }
+
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        View v= inflater.inflate(R.layout.selected_provider_activity, container, false);
+        providerNameTextView = v.findViewById(R.id.providerName);
+        providerNameTextView.setText(providerName);
+        tagTitleTextView = v.findViewById(R.id.tag_title);
+        tagTitleTextView.setText(tagTitle);
+      
+        return  v;
+    }
+
 }

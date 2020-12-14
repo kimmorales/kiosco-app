@@ -6,10 +6,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.kioscoapp.Model.CategoriesMoneyCenter;
 import com.example.kioscoapp.Model.ServiceByNameMoneyCenter;
 import com.example.kioscoapp.R;
 import com.squareup.picasso.Picasso;
@@ -22,10 +24,16 @@ public class ProviderAdapter extends RecyclerView.Adapter<ProviderAdapter.Provid
 
     Context context;
     ArrayList<ServiceByNameMoneyCenter> providers;
+    OnListener onListener;
 
-    public ProviderAdapter(Context context, ArrayList<ServiceByNameMoneyCenter> providers) {
+    public ProviderAdapter(Context context, ArrayList<ServiceByNameMoneyCenter> providers, ProviderAdapter.OnListener onListener) {
         this.context = context;
         this.providers = providers;
+        this.onListener = onListener;
+    }
+
+    public ProviderAdapter(Context context){
+        this.context = context;
     }
 
     @NonNull
@@ -41,6 +49,7 @@ public class ProviderAdapter extends RecyclerView.Adapter<ProviderAdapter.Provid
     public void onBindViewHolder(@NonNull ProviderViewHolder holder, int position) {
         ServiceByNameMoneyCenter category = providers.get(position);
         holder.textViewName.setText(category.getDescription());
+        holder.bind(category,onListener);
         Picasso.get().load(category.getLogo()).into(holder.circleImage);
     }
 
@@ -59,5 +68,16 @@ public class ProviderAdapter extends RecyclerView.Adapter<ProviderAdapter.Provid
             textViewName=itemView.findViewById(R.id.providerName);
             circleImage=itemView.findViewById(R.id.providerImage);
         }
+        public void bind(final ServiceByNameMoneyCenter service, final ProviderAdapter.OnListener listener){
+            textViewName.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    listener.onItemClick(service);
+                }
+            });
+        }
+    }
+    public interface OnListener{
+        void onItemClick(ServiceByNameMoneyCenter service);
     }
 }
