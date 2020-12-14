@@ -13,14 +13,32 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.kioscoapp.Adapter.CategoriesAdapter;
+import com.example.kioscoapp.Adapter.ProviderAdapter;
+import com.example.kioscoapp.Model.CategoriesMoneyCenter;
+import com.example.kioscoapp.Model.ResponseCategories;
+import com.example.kioscoapp.Model.ResponseServicesByName;
+import com.example.kioscoapp.Model.ServiceByNameMoneyCenter;
+import com.example.kioscoapp.Services.CategoryMoneyCenterService;
+import com.example.kioscoapp.Services.ServicesByName;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
+import java.util.ArrayList;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class ProvidersActivity extends AppCompatActivity {
     public static final String SELECTED_INDEX = "";
     public static final Integer SELECTED_IMAGE = null;
+    RecyclerView recyclerViewCat;
     ListView list;
     String selectedIndex = "0";
 
@@ -41,7 +59,7 @@ public class ProvidersActivity extends AppCompatActivity {
         setContentView(R.layout.providers_list_activity);
 
         ProviderItem adapter = new ProviderItem(this, maintitle,imgid);
-        list=(ListView)findViewById(R.id.list);
+        list=(ListView)findViewById(R.id.providers_list);
         list.setAdapter(adapter);
 
 
@@ -58,6 +76,7 @@ public class ProvidersActivity extends AppCompatActivity {
 
             }
         });
+        getCategories();
     }
 
     public void sendMessage(View view) {
@@ -68,4 +87,26 @@ public class ProvidersActivity extends AppCompatActivity {
         //intent.putExtra(String.valueOf(SELECTED_IMAGE), imgid[0]);
         startActivity(intent);
     }
+    public  void getCategories(){
+        ServicesByName categorySer = new ServicesByName();
+        categorySer.loadServicesByName(this).enqueue(new Callback<ResponseServicesByName>() {
+            @Override
+            public void onResponse(retrofit2.Call<ResponseServicesByName> call, Response<ResponseServicesByName> response) {
+                if(response.isSuccessful() && response.body().getData().size()>0){
+
+                    //setCategories(response.body().getData());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseServicesByName> call, Throwable t) {
+
+            }
+
+        });
+    }
+    private void setCategories(ArrayList<ServiceByNameMoneyCenter> providers){
+        recyclerViewCat.setAdapter(new ProviderAdapter(this, providers));
+    }
+
 }
