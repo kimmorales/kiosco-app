@@ -14,9 +14,18 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.kioscoapp.Model.ResponseCategories;
+import com.example.kioscoapp.Model.ResponseServicesByName;
+import com.example.kioscoapp.Services.CategoryMoneyCenterService;
+import com.example.kioscoapp.Services.ProviderServiceByName;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class ProvidersActivity extends AppCompatActivity {
     public static final String SELECTED_INDEX = "";
@@ -43,7 +52,7 @@ public class ProvidersActivity extends AppCompatActivity {
         ProviderItem adapter = new ProviderItem(this, maintitle,imgid);
         list=(ListView)findViewById(R.id.list);
         list.setAdapter(adapter);
-
+        getCategories();
 
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
@@ -67,5 +76,26 @@ public class ProvidersActivity extends AppCompatActivity {
         intent.putExtra(SELECTED_INDEX, selectedIndex);
         //intent.putExtra(String.valueOf(SELECTED_IMAGE), imgid[0]);
         startActivity(intent);
+    }
+
+    public  void getCategories(){
+        ProviderServiceByName categorySer=new ProviderServiceByName();
+        categorySer.loadServicesByName(this).enqueue(new Callback<ResponseServicesByName>() {
+            @Override
+            public void onResponse(Call<ResponseServicesByName> call, Response<ResponseServicesByName> response) {
+                if( response.body() != null){
+                    if(response.isSuccessful() && response.body().getData().size()>0){
+                        //setCategories(response.body().getData());
+                    }
+                }
+
+
+            }
+
+            @Override
+            public void onFailure(Call<ResponseServicesByName> call, Throwable t) {
+                System.out.println("error");
+            }
+        });
     }
 }

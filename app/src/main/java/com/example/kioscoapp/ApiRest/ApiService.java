@@ -5,6 +5,7 @@ import com.example.kioscoapp.Model.Country;
 import com.example.kioscoapp.Model.Format;
 import com.example.kioscoapp.Model.GeneralResponse;
 import com.example.kioscoapp.Model.ResponseCategories;
+import com.example.kioscoapp.Model.ResponseServicesByName;
 
 import java.util.List;
 
@@ -32,4 +33,11 @@ public interface ApiService {
     @POST("ticket")
     Call<List<ConsultCodBarMoneyCenter>> getConsultAmountByServices();
 
+    @GET("servicesByCategory")
+    Call<ResponseServicesByName> getServicesByName(@Query("countryCode") String countryId,
+                                                   @Query("formatID") String formatId,
+                                                   @Query("categoryID") String categoryId,
+                                                   @Query("visible") String visible,
+                                                   @Query("env") String env
+    );
 }
