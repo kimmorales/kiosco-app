@@ -64,8 +64,7 @@ public class ProvidersActivity extends Fragment {
             @Override
             public void onResponse(Call<ResponseServicesByName> call, Response<ResponseServicesByName> response) {
                 if (response.isSuccessful() && response.body().getData() == null){
-                    //toDo colocar fragmente de error
-                    //System.out.println("ERROR");
+                    mlistener.goToNotFound();
                 }
                 else if(response.isSuccessful() && response.body().getData().size()>0){
                     setCategories(response.body().getData());
@@ -132,5 +131,6 @@ public class ProvidersActivity extends Fragment {
                                   String countryCode,
                                   String commerceIdWm,
                                   String name);
+        void goToNotFound();
     }
 }
