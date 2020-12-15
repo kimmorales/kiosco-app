@@ -83,5 +83,8 @@ public class TiempoAire {
     public void setDateCreate(String dateCreate) {
         this.dateCreate = dateCreate;
     }
+
+    public class OnListener {
+    }
 }
 

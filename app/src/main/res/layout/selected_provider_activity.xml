@@ -102,6 +102,15 @@
                     android:inputType="number"
                     app:layout_constraintStart_toStartOf="parent" />
 
+                <TextView
+                    android:id="@+id/textViewWarning"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/red"
+                    android:layout_marginBottom="10dp"
+                    android:visibility="gone"
+                    android:text="@string/ingrese_numero_consultar" />
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="50dp"

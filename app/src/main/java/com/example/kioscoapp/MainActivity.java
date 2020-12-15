@@ -13,6 +13,7 @@ import com.example.kioscoapp.Views.CategoriesFragment;
 import com.example.kioscoapp.Views.CountrySelectedFragment;
 import com.example.kioscoapp.Views.InitialScreenFragment;
 import com.example.kioscoapp.Views.ProvidersActivity;
+import com.example.kioscoapp.Views.TiempoAireFragment;
 
 import java.util.ArrayList;
 
@@ -20,7 +21,9 @@ public class MainActivity extends AppCompatActivity implements
         CountrySelectedFragment.OnListener,
         InitialScreenFragment.OnListener,
        CategoriesFragment.OnListener,
-ProvidersActivity.OnListener{
+ProvidersActivity.OnListener,
+        TiempoAireFragment.OnListener,
+SelectedProviderActivity.OnListener{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,8 +66,13 @@ ProvidersActivity.OnListener{
 
     @Override
     public void goToSelectedProvider(String providerName, String tagTitle,Boolean isTiempoAire,
-                                     Boolean openPayment, String countryCode, String commerceIdWm) {
+                                     Boolean openPayment, String countryCode, String commerceIdWm, String name) {
         changeFragment(SelectedProviderActivity.newInstance(providerName,tagTitle, isTiempoAire,
-                openPayment, countryCode, commerceIdWm));
+                openPayment, countryCode, commerceIdWm, name));
+    }
+
+    @Override
+    public void goToTiempoAire(String serviceName,String providerName, String countryCode, String commerceId, String invoceNumber){
+        changeFragment(TiempoAireFragment.newInstance(serviceName,providerName,countryCode, commerceId, invoceNumber));
     }
 }

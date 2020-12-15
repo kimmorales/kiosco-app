@@ -85,7 +85,8 @@ public class ProvidersActivity extends Fragment {
                         Boolean.parseBoolean(service.getIs_Tiempo_Aire()),
                         Boolean.parseBoolean(service.getOpen_Payment()),
                         service.getCountry_Code(),
-                        service.getCommerce_Id_WM());
+                        service.getCommerce_Id_WM(),
+                        service.getName());
 
             }
         }));
@@ -123,6 +124,7 @@ public class ProvidersActivity extends Fragment {
                                   Boolean isTiempoAire,
                                   Boolean openPayment,
                                   String countryCode,
-                                  String commerceIdWm);
+                                  String commerceIdWm,
+                                  String name);
     }
 }
