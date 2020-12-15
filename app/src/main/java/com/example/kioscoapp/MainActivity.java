@@ -62,7 +62,9 @@ ProvidersActivity.OnListener{
     }
 
     @Override
-    public void goToSelectedProvider(String providerName, String tagTitle) {
-        changeFragment(SelectedProviderActivity.newInstance(providerName,tagTitle));
+    public void goToSelectedProvider(String providerName, String tagTitle,Boolean isTiempoAire,
+                                     Boolean openPayment, String countryCode, String commerceIdWm) {
+        changeFragment(SelectedProviderActivity.newInstance(providerName,tagTitle, isTiempoAire,
+                openPayment, countryCode, commerceIdWm));
     }
 }

@@ -80,7 +80,12 @@ public class ProvidersActivity extends Fragment {
 
             @Override
             public void onItemClick(ServiceByNameMoneyCenter service) {
-                mlistener.goToSelectedProvider(service.getDescription(),service.getTag_Input_Data());
+                mlistener.goToSelectedProvider(service.getDescription(),
+                        service.getTag_Input_Data(),
+                        Boolean.parseBoolean(service.getIs_Tiempo_Aire()),
+                        Boolean.parseBoolean(service.getOpen_Payment()),
+                        service.getCountry_Code(),
+                        service.getCommerce_Id_WM());
 
             }
         }));
@@ -114,6 +119,10 @@ public class ProvidersActivity extends Fragment {
         return  v;
     }
     public interface OnListener {
-        void goToSelectedProvider(String providerName, String tagTitle);
+        void goToSelectedProvider(String providerName, String tagTitle,
+                                  Boolean isTiempoAire,
+                                  Boolean openPayment,
+                                  String countryCode,
+                                  String commerceIdWm);
     }
 }
