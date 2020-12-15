@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.SearchView;
 
 import com.example.kioscoapp.Adapter.CategoriesAdapter;
@@ -38,7 +39,7 @@ public class CategoriesFragment extends Fragment {
     RecyclerView recyclerViewCat;
     EditText searchView;
     OnListener mlistener;
-
+    private ProgressBar loadingCategories;
 
     private String mParam1;
     private String mParam2;
@@ -67,10 +68,13 @@ public class CategoriesFragment extends Fragment {
 
     public  void getCategories(){
         CategoryMoneyCenterService categorySer=new CategoryMoneyCenterService();
+        loadingCategories.setVisibility(View.VISIBLE);
         categorySer.loadCategories(getContext()).enqueue(new Callback<ResponseCategories>() {
             @Override
             public void onResponse(Call<ResponseCategories> call, Response<ResponseCategories> response) {
+
                 if(response.isSuccessful() && response.body().getData().size()>0){
+                    loadingCategories.setVisibility(View.GONE);
                     setCategories(response.body().getData());
                 }
 
@@ -79,6 +83,7 @@ public class CategoriesFragment extends Fragment {
             @Override
             public void onFailure(Call<ResponseCategories> call, Throwable t) {
                 System.out.println("error");
+                loadingCategories.setVisibility(View.GONE);
             }
         });
     }
@@ -94,7 +99,7 @@ public class CategoriesFragment extends Fragment {
         recyclerViewCat.setAdapter(new CategoriesAdapter(getContext(), categories, new CategoriesAdapter.OnListener() {
             @Override
             public void onItemClick(CategoriesMoneyCenter category) {
-                mlistener.goProvidersActivity(String.valueOf(category.getCategory_Id()));
+                mlistener.goProvidersActivity(String.valueOf(category.getCategory_Id()), category.getName());
                 //TODO aqui integrar boton para conectar pantallas de kimberly
             }
         }));
@@ -119,11 +124,13 @@ public class CategoriesFragment extends Fragment {
         recyclerViewCat.setHasFixedSize(true);
         recyclerViewCat.setLayoutManager(layoutManager);
         searchView=v.findViewById(R.id.svCategories);
+        loadingCategories = v.findViewById(R.id.loading_categories);
         getCategories();
         return  v;
     }
 
     public interface OnListener {
-        void goProvidersActivity(String id);
+        void goProvidersActivity(String id, String categoryName);
+        void goToNotFound();
     }
 }

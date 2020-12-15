@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.kioscoapp.Adapter.CategoriesAdapter;
 import com.example.kioscoapp.Adapter.TiempoAireAdapter;
 import com.example.kioscoapp.Mappers.Mappers;
+import com.example.kioscoapp.MainActivity;
 import com.example.kioscoapp.Model.CategoriesMoneyCenter;
 import com.example.kioscoapp.Model.ResponseCategories;
 import com.example.kioscoapp.Model.TiempoAire;
@@ -44,8 +46,8 @@ public class TiempoAireFragment extends Fragment {
     RecyclerView recyclerViewCat;
     EditText searchView;
     CategoriesFragment.OnListener mlistener;
-
-
+    ProgressBar loadingTiempoAire;
+    View notFoundData;
     private String countryCode;
     private String commerceId;
     private String invoiceNumber;
@@ -88,15 +90,19 @@ public class TiempoAireFragment extends Fragment {
                 commerceId ,invoiceNumber).enqueue(new Callback<ArrayList<TiempoAire>>() {
             @Override
             public void onResponse(Call<ArrayList<TiempoAire>> call, Response<ArrayList<TiempoAire>> response) {
-                //mlistener.goToTiempoAire();
                 if(response.isSuccessful() && response.body().size()>0){
+                    loadingTiempoAire.setVisibility(View.GONE);
                     setTiempoAireItems(response.body());
+                }
+                else {
+                    loadingTiempoAire.setVisibility(View.GONE);
+                    notFoundData.setVisibility(View.VISIBLE);
                 }
             }
 
             @Override
             public void onFailure(Call<ArrayList<TiempoAire>> call, Throwable t) {
-                System.out.println(t.getMessage());
+                loadingTiempoAire.setVisibility(View.GONE);
             }
         });
 
@@ -137,7 +143,6 @@ public class TiempoAireFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View v= inflater.inflate(R.layout.fragment_tiempo_aire, container, false);
         recyclerViewCat=v.findViewById(R.id.rcvTiempoAire);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
@@ -148,12 +153,13 @@ public class TiempoAireFragment extends Fragment {
         TextView serviceNameTextView = v.findViewById(R.id.serviceName);
         serviceTypeTextView.setText(serviceName);
         serviceNameTextView.setText(providerName);
-
+        loadingTiempoAire = v.findViewById(R.id.loading_tiempo_aire);
+        notFoundData = v.findViewById(R.id.nota_found_tiempo_aire_data);
         getPendingTiempoAire();
         return  v;
     }
 
     public interface OnListener {
-        void goProvidersActivity(String id);
+        //void goProvidersActivity(String id);
     }
 }

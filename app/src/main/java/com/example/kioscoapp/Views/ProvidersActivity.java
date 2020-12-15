@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -29,11 +31,14 @@ public class ProvidersActivity extends Fragment {
     public static final String SELECTED_INDEX = "";
     public static final Integer SELECTED_IMAGE = null;
     private static final String ARG_PARAM1 = "param1";
+    private static final String CATEGORY_NAME = "categoryName";
     RecyclerView recyclerViewCat;
     OnListener mlistener;
 
     private String mParam1;
-
+    private String categoryName;
+    ProgressBar loadingProviders;
+    View notFoundData;
     public ProvidersActivity() {
         // Required empty public constructor
     }
@@ -46,10 +51,11 @@ public class ProvidersActivity extends Fragment {
      * @return A new instance of fragment CategoriesFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static ProvidersActivity newInstance(String id) {
+    public static ProvidersActivity newInstance(String id, String categoryName) {
         ProvidersActivity fragment = new ProvidersActivity();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, id);
+        args.putString(CATEGORY_NAME, categoryName);
         fragment.setArguments(args);
         return fragment;
     }
@@ -60,17 +66,20 @@ public class ProvidersActivity extends Fragment {
             @Override
             public void onResponse(Call<ResponseServicesByName> call, Response<ResponseServicesByName> response) {
                 if (response.isSuccessful() && response.body().getData() == null){
-                    //toDo colocar fragmente de error
-                    //System.out.println("ERROR");
+                    loadingProviders.setVisibility(View.GONE);
+                    notFoundData.setVisibility(View.VISIBLE);
+                   // mlistener.goToNotFound();
                 }
                 else if(response.isSuccessful() && response.body().getData().size()>0){
                     setCategories(response.body().getData());
+                    loadingProviders.setVisibility(View.GONE);
                 }
             }
 
             @Override
             public void onFailure(Call<ResponseServicesByName> call, Throwable t) {
                 System.out.println("error");
+                loadingProviders.setVisibility(View.GONE);
             }
         });
     }
@@ -96,6 +105,7 @@ public class ProvidersActivity extends Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
+            categoryName = getArguments().getString(CATEGORY_NAME);
         }
     }
 
@@ -115,6 +125,10 @@ public class ProvidersActivity extends Fragment {
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerViewCat.setHasFixedSize(true);
         recyclerViewCat.setLayoutManager(layoutManager);
+        TextView pageTitleTextV = v.findViewById(R.id.pageTitle);
+        pageTitleTextV.setText(categoryName);
+        loadingProviders = v.findViewById(R.id.loading_providers);
+        notFoundData = v.findViewById(R.id.nota_found_providers);
         getCategories();
         return  v;
     }
@@ -125,5 +139,6 @@ public class ProvidersActivity extends Fragment {
                                   String countryCode,
                                   String commerceIdWm,
                                   String name);
+        void goToNotFound();
     }
 }

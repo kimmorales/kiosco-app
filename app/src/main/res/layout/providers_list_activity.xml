@@ -10,22 +10,61 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:orientation="vertical">
+
         <TextView
+            android:id="@+id/pageTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center_horizontal"
             android:text="@string/seleccione_proveedor_de_servicio"
             android:textColor="@android:color/black"
-            android:layout_gravity="center_horizontal"
             android:textSize="24sp">
 
         </TextView>
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="15dp"
+            android:gravity="center_horizontal"
+            android:text="@string/completa_los_pasos" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:text="@string/seleccione_proveedor_de_servicio" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <include
+                android:id="@+id/loading_providers"
+                layout="@layout/fragment_loading"
+                android:visibility="visible" />
+        </LinearLayout>
+        <include
+            android:id="@+id/nota_found_providers"
+            layout="@layout/fragment_not_found"
+            android:visibility="gone" />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rcvProviders"
             android:layout_width="370dp"
             android:layout_height="598dp"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginBottom="50dp"></androidx.recyclerview.widget.RecyclerView>
+            android:layout_marginBottom="50dp">
+
+        </androidx.recyclerview.widget.RecyclerView>
+
     </LinearLayout>
 
 

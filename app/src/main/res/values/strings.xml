@@ -13,4 +13,9 @@
     <string name="consultar_pendientes">Consultar Pendientes</string>
     <string name="digite_monto_pagar">Digite el monto a pagar</string>
     <string name="ingrese_numero_consultar">Por favor ingrese el número a consultar</string>
+    <string name="completa_los_pasos">Completa los pasos para consultar tu factura</string>
+    <string name="sin_resultados">Sin resultados</string>
+    <string name="no_se_encontraron_datos">No hemos encontrado servicios asociados a la búsqueda.
+        Realice nuevamente la búsqueda a utilizar las categorías.
+    </string>
 </resources>

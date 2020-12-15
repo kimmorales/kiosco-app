@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -47,8 +48,8 @@ public class ServicesConsultFragment extends Fragment {
     private String invoiceNumber;
     private String providerName;
     private String serviceName;
-
-
+    ProgressBar loadinServicesConsult;
+    View notFoundData;
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
@@ -76,14 +77,20 @@ public class ServicesConsultFragment extends Fragment {
             @Override
             public void onResponse(Call<ResponseConsult> call, Response<ResponseConsult> response) {
                 response.body();
-                System.out.println(response.body().getServicesConsult());
-                setItems(response.body().getServicesConsult());
-
+                if(response.body().getServicesConsult() != null ){
+                    loadinServicesConsult.setVisibility(View.GONE);
+                    setItems(response.body().getServicesConsult());
+                }
+                else {
+                    loadinServicesConsult.setVisibility(View.GONE);
+                   // mlistener.goToNotFound();
+                    notFoundData.setVisibility(View.VISIBLE);
+                }
             }
 
             @Override
             public void onFailure(Call<ResponseConsult> call, Throwable t) {
-
+                loadinServicesConsult.setVisibility(View.GONE);
             }
         });
 
@@ -92,8 +99,8 @@ public class ServicesConsultFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-       /* if (getActivity() instanceof CategoriesFragment.OnListener)
-            mlistener = (CategoriesFragment.OnListener) getActivity();*/
+        if (getActivity() instanceof ServicesConsultFragment.OnListener)
+            mlistener = (ServicesConsultFragment.OnListener) getActivity();
     }
 
     private void setItems (final ArrayList<Consult> consultArrayList){
@@ -136,11 +143,13 @@ public class ServicesConsultFragment extends Fragment {
         providerNameTextV.setText(providerName);
         serviceNameTextV.setText(serviceName);
         customerInfo.setText(invoiceNumber);
+        loadinServicesConsult = v.findViewById(R.id.loading_services_consult);
+        notFoundData = v.findViewById(R.id.nota_found_service_consult);
         getServiceConsultPending();
         return  v;
     }
 
     public interface OnListener {
-        void goToServicesConsult();
+        void goToNotFound();
     }
 }

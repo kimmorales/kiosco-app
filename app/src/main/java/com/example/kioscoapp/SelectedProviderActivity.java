@@ -125,54 +125,10 @@ public class SelectedProviderActivity extends Fragment {
                 else{
                     mlistener.goToServicesConsult(countryCode,commerceId,serviceName, providerName, editTextServiceNumber.getText().toString());
                 }
-               //mlistener.goToServicesConsult(serviceName, providerName, editTextServiceNumber.getText().toString());
-
-               /* if (TextUtils.isEmpty(editTextServiceNumber.getText())) {
-                    warning.setVisibility(View.VISIBLE);
-                }
-                else {
-                    mlistener.goToTiempoAire(serviceName, providerName, countryCode, commerceId, editTextServiceNumber.getText().toString());
-                }*/
             }
         });
         return  v;
     }
-   /* public  void getPendingTiempoAire(){
-        TiempoAireService tiempoAireService=new TiempoAireService();
-
-        tiempoAireService.loadTiempoAirePending(getContext() , countryCode,
-                commerceId ,"3223535").enqueue(new Callback<ArrayList<TiempoAire>>() {
-            @Override
-            public void onResponse(Call<ArrayList<TiempoAire>> call, Response<ArrayList<TiempoAire>> response) {
-               //mlistener.goToTiempoAire();
-            }
-
-            @Override
-            public void onFailure(Call<ArrayList<TiempoAire>> call, Throwable t) {
-                System.out.println(t.getMessage());
-            }
-        });
-
-    }
-
-    public  void getServiceConsultPending(){
-        ServiceConsult tiempoAireService= new ServiceConsult();
-
-        tiempoAireService.loadServicesByName(getContext()).enqueue(new Callback<ResponseConsult>() {
-            @Override
-            public void onResponse(Call<ResponseConsult> call, Response<ResponseConsult> response) {
-                response.body();
-                System.out.println(response.body().getServicesConsult());
-
-            }
-
-            @Override
-            public void onFailure(Call<ResponseConsult> call, Throwable t) {
-
-            }
-        });
-
-    }*/
 
     public interface OnListener {
         void goToTiempoAire(String serviceName, String providerName, String countryCode, String commerceId, String invoceNumber, Boolean openPayment);

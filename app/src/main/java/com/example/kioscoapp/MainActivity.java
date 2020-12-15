@@ -23,6 +23,7 @@ import com.example.kioscoapp.Views.CategoriesFragment;
 import com.example.kioscoapp.Views.CountrySelectedFragment;
 import com.example.kioscoapp.Views.InactiveFragment;
 import com.example.kioscoapp.Views.InitialScreenFragment;
+import com.example.kioscoapp.Views.NotFoundFragment;
 import com.example.kioscoapp.Views.ProvidersActivity;
 import com.example.kioscoapp.Views.ServicesConsultFragment;
 import com.example.kioscoapp.Views.TiempoAireFragment;
@@ -206,9 +207,10 @@ public class MainActivity extends AppCompatActivity implements
 
     }
 
+
     @Override
-    public void goProvidersActivity(String id) {
-        changeFragment(ProvidersActivity.newInstance(id),true);
+    public void goProvidersActivity(String id, String categoryName) {
+        changeFragment(ProvidersActivity.newInstance(id,categoryName),true);
     }
 
     @Override
@@ -229,8 +231,8 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     @Override
-    public void goToServicesConsult() {
-
+    public void goToNotFound() {
+        changeFragment(new NotFoundFragment(),true);
     }
 
     @Override
