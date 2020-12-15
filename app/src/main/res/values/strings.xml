@@ -1,10 +1,5 @@
 <resources>
     <string name="app_name">Kiosco App</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="local_variable_country">country</string>
-
     <string name="proveedor_de_servicio">Proveedor de servicio</string>
     <string name="seleccione_proveedor_de_servicio">Selecciona el proveedor de servicio</string>
     <string name="seleccione_monto">Seleccione el monto que desea recargar</string>
@@ -14,5 +9,8 @@
     <string name="carrito_de_servicios" />
     <string name="facturas_por_pagar" />
     <string name="consultar_otro_servicio" />
-
+    <string name="local_variable_country">country</string>
+    <string name="consultar_pendientes">Consultar Pendientes</string>
+    <string name="digite_monto_pagar">Digite el monto a pagar</string>
+    <string name="ingrese_numero_consultar">Por favor ingrese el número a consultar</string>
 </resources>

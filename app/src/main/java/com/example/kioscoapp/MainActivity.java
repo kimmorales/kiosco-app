@@ -23,6 +23,9 @@ import com.example.kioscoapp.Views.CategoriesFragment;
 import com.example.kioscoapp.Views.CountrySelectedFragment;
 import com.example.kioscoapp.Views.InactiveFragment;
 import com.example.kioscoapp.Views.InitialScreenFragment;
+import com.example.kioscoapp.Views.ProvidersActivity;
+import com.example.kioscoapp.Views.ServicesConsultFragment;
+import com.example.kioscoapp.Views.TiempoAireFragment;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -31,6 +34,10 @@ public class MainActivity extends AppCompatActivity implements
         CountrySelectedFragment.OnListener,
         InitialScreenFragment.OnListener,
         CategoriesFragment.OnListener,
+        ProvidersActivity.OnListener,
+        TiempoAireFragment.OnListener,
+        SelectedProviderActivity.OnListener,
+        ServicesConsultFragment.OnListener,
         InactiveFragment.OnListener{
 
     Toolbar toolbar;
@@ -39,6 +46,8 @@ public class MainActivity extends AppCompatActivity implements
     final Handler handler = new Handler();
     MyCountDownTimer counter;
     private final long interval = 1 * 1000;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -199,12 +208,29 @@ public class MainActivity extends AppCompatActivity implements
 
     @Override
     public void goProvidersActivity(String id) {
-        /*
-        Bundle params = new Bundle();
-        params.putString("idCategory", id);
-        Intent i = new Intent(this, ProvidersActivity.class);
-        i.putExtras(params);
-        startActivity(i);*/
+        changeFragment(ProvidersActivity.newInstance(id),true);
+    }
+
+    @Override
+    public void goToSelectedProvider(String providerName, String tagTitle,String isTiempoAire,
+                                     String openPayment, String countryCode, String commerceIdWm, String name) {
+        changeFragment(SelectedProviderActivity.newInstance(providerName,tagTitle, isTiempoAire,
+                openPayment, countryCode, commerceIdWm, name),true);
+    }
+
+    @Override
+    public void goToTiempoAire(String serviceName,String providerName, String countryCode, String commerceId, String invoceNumber, Boolean openPayment){
+        changeFragment(TiempoAireFragment.newInstance(serviceName,providerName,countryCode, commerceId, invoceNumber,openPayment),true);
+    }
+
+    @Override
+    public void goToServicesConsult(String countryCode,String commerceId, String serviceName,String providerName, String invoiceNumber) {
+        changeFragment(ServicesConsultFragment.newInstance(  countryCode, commerceId,serviceName, providerName,  invoiceNumber),true);
+    }
+
+    @Override
+    public void goToServicesConsult() {
+
     }
 
     @Override

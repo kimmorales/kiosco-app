@@ -49,13 +49,13 @@
                     android:textColor="#000000" />
 
                 <TextView
-                    android:id="@+id/textView8"
+                    android:id="@+id/textViewTotal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:gravity="end"
                     android:textSize="15sp"
-                    android:text="$300"
+                    android:text=""
                     android:textColor="#000000" />
 
             </RelativeLayout>
@@ -90,7 +90,7 @@
                     style="@style/buttonOutlinePrimary"/>
 
                 <Button
-                    android:id="@+id/button2"
+                    android:id="@+id/btnCheckPending"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
