@@ -44,7 +44,7 @@ public class TiempoAireFragment extends Fragment {
     EditText searchView;
     CategoriesFragment.OnListener mlistener;
     ProgressBar loadingTiempoAire;
-
+    View notFoundData;
     private String countryCode;
     private String commerceId;
     private String invoiceNumber;
@@ -94,7 +94,8 @@ public class TiempoAireFragment extends Fragment {
                 }
                 else {
                     loadingTiempoAire.setVisibility(View.GONE);
-                   mlistener.goToNotFound();
+                    notFoundData.setVisibility(View.VISIBLE);
+                   //mlistener.goToNotFound();
                 }
             }
 
@@ -152,6 +153,7 @@ public class TiempoAireFragment extends Fragment {
         serviceTypeTextView.setText(serviceName);
         serviceNameTextView.setText(providerName);
         loadingTiempoAire = v.findViewById(R.id.loading_tiempo_aire);
+        notFoundData = v.findViewById(R.id.nota_found_tiempo_aire_data);
         getPendingTiempoAire();
         return  v;
     }

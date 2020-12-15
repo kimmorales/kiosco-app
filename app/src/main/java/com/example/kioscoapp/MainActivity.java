@@ -59,6 +59,7 @@ ServicesConsultFragment.OnListener{
     public void changeFragment(Fragment fragment){
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.flMainContainer, fragment)
+                .addToBackStack(String.valueOf(R.id.flMainContainer))
                 .commit();
     }
 

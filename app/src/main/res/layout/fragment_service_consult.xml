@@ -60,6 +60,10 @@
                 layout="@layout/fragment_loading"
                 android:visibility="visible" />
         </LinearLayout>
+        <include
+            android:id="@+id/nota_found_service_consult"
+            layout="@layout/fragment_not_found"
+            android:visibility="gone" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rcvServiceConsult"

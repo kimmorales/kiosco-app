@@ -38,7 +38,7 @@ public class ProvidersActivity extends Fragment {
     private String mParam1;
     private String categoryName;
     ProgressBar loadingProviders;
-
+    View notFoundData;
     public ProvidersActivity() {
         // Required empty public constructor
     }
@@ -67,7 +67,8 @@ public class ProvidersActivity extends Fragment {
             public void onResponse(Call<ResponseServicesByName> call, Response<ResponseServicesByName> response) {
                 if (response.isSuccessful() && response.body().getData() == null){
                     loadingProviders.setVisibility(View.GONE);
-                    mlistener.goToNotFound();
+                    notFoundData.setVisibility(View.VISIBLE);
+                   // mlistener.goToNotFound();
                 }
                 else if(response.isSuccessful() && response.body().getData().size()>0){
                     setCategories(response.body().getData());
@@ -127,6 +128,7 @@ public class ProvidersActivity extends Fragment {
         TextView pageTitleTextV = v.findViewById(R.id.pageTitle);
         pageTitleTextV.setText(categoryName);
         loadingProviders = v.findViewById(R.id.loading_providers);
+        notFoundData = v.findViewById(R.id.nota_found_providers);
         getCategories();
         return  v;
     }

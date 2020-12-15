@@ -46,7 +46,7 @@ public class ServicesConsultFragment extends Fragment {
     private String providerName;
     private String serviceName;
     ProgressBar loadinServicesConsult;
-
+    View notFoundData;
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
@@ -80,7 +80,8 @@ public class ServicesConsultFragment extends Fragment {
                 }
                 else {
                     loadinServicesConsult.setVisibility(View.GONE);
-                    mlistener.goToNotFound();
+                   // mlistener.goToNotFound();
+                    notFoundData.setVisibility(View.VISIBLE);
                 }
             }
 
@@ -138,6 +139,7 @@ public class ServicesConsultFragment extends Fragment {
         serviceNameTextV.setText(serviceName);
         customerInfo.setText(invoiceNumber);
         loadinServicesConsult = v.findViewById(R.id.loading_services_consult);
+        notFoundData = v.findViewById(R.id.nota_found_service_consult);
         getServiceConsultPending();
         return  v;
     }
