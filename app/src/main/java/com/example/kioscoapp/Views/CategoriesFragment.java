@@ -94,7 +94,7 @@ public class CategoriesFragment extends Fragment {
         recyclerViewCat.setAdapter(new CategoriesAdapter(getContext(), categories, new CategoriesAdapter.OnListener() {
             @Override
             public void onItemClick(CategoriesMoneyCenter category) {
-                mlistener.goProvidersActivity(String.valueOf(category.getCategory_Id()));
+                mlistener.goProvidersActivity(String.valueOf(category.getCategory_Id()), category.getName());
                 //TODO aqui integrar boton para conectar pantallas de kimberly
             }
         }));
@@ -124,6 +124,7 @@ public class CategoriesFragment extends Fragment {
     }
 
     public interface OnListener {
-        void goProvidersActivity(String id);
+        void goProvidersActivity(String id, String categoryName);
+        void goToNotFound();
     }
 }

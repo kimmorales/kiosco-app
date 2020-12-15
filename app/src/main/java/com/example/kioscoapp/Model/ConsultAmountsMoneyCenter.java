@@ -1,6 +1,6 @@
 package com.example.kioscoapp.Model;
 
-public class ConsultAmountsMoneyCenter {
+public class  ConsultAmountsMoneyCenter {
     private String responseCode;
     private String countryCode;
     private String formatId;

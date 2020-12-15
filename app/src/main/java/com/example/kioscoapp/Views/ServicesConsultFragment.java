@@ -73,8 +73,15 @@ public class ServicesConsultFragment extends Fragment {
             @Override
             public void onResponse(Call<ResponseConsult> call, Response<ResponseConsult> response) {
                 response.body();
+                if(response.body().getServicesConsult() != null ){
+                    setItems(response.body().getServicesConsult());
+                }
+                else {
+                    mlistener.goToNotFound();
+                }
+                System.out.println("response.body().getServicesConsult()");
                 System.out.println(response.body().getServicesConsult());
-                setItems(response.body().getServicesConsult());
+
 
             }
 
@@ -89,8 +96,8 @@ public class ServicesConsultFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-       /* if (getActivity() instanceof CategoriesFragment.OnListener)
-            mlistener = (CategoriesFragment.OnListener) getActivity();*/
+        if (getActivity() instanceof ServicesConsultFragment.OnListener)
+            mlistener = (ServicesConsultFragment.OnListener) getActivity();
     }
 
     private void setItems (final ArrayList<Consult> consultArrayList){
@@ -136,6 +143,6 @@ public class ServicesConsultFragment extends Fragment {
     }
 
     public interface OnListener {
-        void goToServicesConsult();
+        void goToNotFound();
     }
 }

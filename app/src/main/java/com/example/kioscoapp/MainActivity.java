@@ -12,6 +12,7 @@ import com.example.kioscoapp.Services.Local.CountryLocalService;
 import com.example.kioscoapp.Views.CategoriesFragment;
 import com.example.kioscoapp.Views.CountrySelectedFragment;
 import com.example.kioscoapp.Views.InitialScreenFragment;
+import com.example.kioscoapp.Views.NotFoundFragment;
 import com.example.kioscoapp.Views.ProvidersActivity;
 import com.example.kioscoapp.Views.ServicesConsultFragment;
 import com.example.kioscoapp.Views.TiempoAireFragment;
@@ -62,8 +63,8 @@ ServicesConsultFragment.OnListener{
     }
 
     @Override
-    public void goProvidersActivity(String id) {
-        changeFragment(ProvidersActivity.newInstance(id));
+    public void goProvidersActivity(String id, String categoryName) {
+        changeFragment(ProvidersActivity.newInstance(id,categoryName));
     }
 
     @Override
@@ -84,7 +85,7 @@ ServicesConsultFragment.OnListener{
     }
 
     @Override
-    public void goToServicesConsult() {
-
+    public void goToNotFound() {
+        changeFragment(new NotFoundFragment());
     }
 }

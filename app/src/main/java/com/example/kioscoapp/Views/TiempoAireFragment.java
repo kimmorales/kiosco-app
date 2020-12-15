@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.kioscoapp.Adapter.CategoriesAdapter;
 import com.example.kioscoapp.Adapter.TiempoAireAdapter;
+import com.example.kioscoapp.MainActivity;
 import com.example.kioscoapp.Model.CategoriesMoneyCenter;
 import com.example.kioscoapp.Model.ResponseCategories;
 import com.example.kioscoapp.Model.TiempoAire;
@@ -89,6 +90,9 @@ public class TiempoAireFragment extends Fragment {
                 if(response.isSuccessful() && response.body().size()>0){
                     setTiempoAireItems(response.body());
                 }
+                else {
+                   mlistener.goToNotFound();
+                }
             }
 
             @Override
@@ -149,6 +153,7 @@ public class TiempoAireFragment extends Fragment {
     }
 
     public interface OnListener {
-        void goProvidersActivity(String id);
+        //void goProvidersActivity(String id);
+        void goToNotFound();
     }
 }
