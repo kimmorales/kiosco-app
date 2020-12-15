@@ -5,21 +5,29 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".Views.CategoriesFragment">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="16dp"
+        android:gravity="center_horizontal"
         android:orientation="vertical">
+
         <EditText
+            android:id="@+id/svCategories"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="15dp"
-            android:id="@+id/svCategories"></EditText>
+            android:layout_marginBottom="15dp"></EditText>
+
+        <include
+            android:id="@+id/loading_categories"
+            layout="@layout/fragment_loading"
+            android:visibility="visible" />
 
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvCategories"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/rvCategories">
+            android:layout_height="match_parent">
 
         </androidx.recyclerview.widget.RecyclerView>
     </LinearLayout>

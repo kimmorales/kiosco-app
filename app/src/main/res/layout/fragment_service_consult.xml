@@ -49,7 +49,17 @@
                 android:text="Seleccione el monto a recargar"
                 android:textColor="@color/cardview_dark_background" />
         </FrameLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
 
+            <include
+                android:id="@+id/loading_services_consult"
+                layout="@layout/fragment_loading"
+                android:visibility="visible" />
+        </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rcvServiceConsult"

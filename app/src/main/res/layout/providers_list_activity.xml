@@ -39,6 +39,18 @@
             android:layout_marginBottom="10dp"
             android:text="@string/seleccione_proveedor_de_servicio" />
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <include
+                android:id="@+id/loading_providers"
+                layout="@layout/fragment_loading"
+                android:visibility="visible" />
+        </LinearLayout>
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rcvProviders"
             android:layout_width="370dp"

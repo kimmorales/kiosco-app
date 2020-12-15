@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -42,7 +43,7 @@ public class TiempoAireFragment extends Fragment {
     RecyclerView recyclerViewCat;
     EditText searchView;
     CategoriesFragment.OnListener mlistener;
-
+    ProgressBar loadingTiempoAire;
 
     private String countryCode;
     private String commerceId;
@@ -88,9 +89,11 @@ public class TiempoAireFragment extends Fragment {
             public void onResponse(Call<ArrayList<TiempoAire>> call, Response<ArrayList<TiempoAire>> response) {
                 //mlistener.goToTiempoAire();
                 if(response.isSuccessful() && response.body().size()>0){
+                    loadingTiempoAire.setVisibility(View.GONE);
                     setTiempoAireItems(response.body());
                 }
                 else {
+                    loadingTiempoAire.setVisibility(View.GONE);
                    mlistener.goToNotFound();
                 }
             }
@@ -98,6 +101,7 @@ public class TiempoAireFragment extends Fragment {
             @Override
             public void onFailure(Call<ArrayList<TiempoAire>> call, Throwable t) {
                 System.out.println(t.getMessage());
+                loadingTiempoAire.setVisibility(View.GONE);
             }
         });
 
@@ -147,7 +151,7 @@ public class TiempoAireFragment extends Fragment {
         TextView serviceNameTextView = v.findViewById(R.id.serviceName);
         serviceTypeTextView.setText(serviceName);
         serviceNameTextView.setText(providerName);
-
+        loadingTiempoAire = v.findViewById(R.id.loading_tiempo_aire);
         getPendingTiempoAire();
         return  v;
     }

@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -36,6 +37,7 @@ public class ProvidersActivity extends Fragment {
 
     private String mParam1;
     private String categoryName;
+    ProgressBar loadingProviders;
 
     public ProvidersActivity() {
         // Required empty public constructor
@@ -64,16 +66,19 @@ public class ProvidersActivity extends Fragment {
             @Override
             public void onResponse(Call<ResponseServicesByName> call, Response<ResponseServicesByName> response) {
                 if (response.isSuccessful() && response.body().getData() == null){
+                    loadingProviders.setVisibility(View.GONE);
                     mlistener.goToNotFound();
                 }
                 else if(response.isSuccessful() && response.body().getData().size()>0){
                     setCategories(response.body().getData());
+                    loadingProviders.setVisibility(View.GONE);
                 }
             }
 
             @Override
             public void onFailure(Call<ResponseServicesByName> call, Throwable t) {
                 System.out.println("error");
+                loadingProviders.setVisibility(View.GONE);
             }
         });
     }
@@ -121,6 +126,7 @@ public class ProvidersActivity extends Fragment {
         recyclerViewCat.setLayoutManager(layoutManager);
         TextView pageTitleTextV = v.findViewById(R.id.pageTitle);
         pageTitleTextV.setText(categoryName);
+        loadingProviders = v.findViewById(R.id.loading_providers);
         getCategories();
         return  v;
     }

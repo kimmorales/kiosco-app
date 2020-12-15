@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -44,7 +45,7 @@ public class ServicesConsultFragment extends Fragment {
     private String invoiceNumber;
     private String providerName;
     private String serviceName;
-
+    ProgressBar loadinServicesConsult;
 
     /**
      * Use this factory method to create a new instance of
@@ -74,20 +75,18 @@ public class ServicesConsultFragment extends Fragment {
             public void onResponse(Call<ResponseConsult> call, Response<ResponseConsult> response) {
                 response.body();
                 if(response.body().getServicesConsult() != null ){
+                    loadinServicesConsult.setVisibility(View.GONE);
                     setItems(response.body().getServicesConsult());
                 }
                 else {
+                    loadinServicesConsult.setVisibility(View.GONE);
                     mlistener.goToNotFound();
                 }
-                System.out.println("response.body().getServicesConsult()");
-                System.out.println(response.body().getServicesConsult());
-
-
             }
 
             @Override
             public void onFailure(Call<ResponseConsult> call, Throwable t) {
-
+                loadinServicesConsult.setVisibility(View.GONE);
             }
         });
 
@@ -138,6 +137,7 @@ public class ServicesConsultFragment extends Fragment {
         providerNameTextV.setText(providerName);
         serviceNameTextV.setText(serviceName);
         customerInfo.setText(invoiceNumber);
+        loadinServicesConsult = v.findViewById(R.id.loading_services_consult);
         getServiceConsultPending();
         return  v;
     }
