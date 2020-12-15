@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -45,9 +46,7 @@ public class TiempoAireAdapter  extends RecyclerView.Adapter<TiempoAireAdapter.T
     public void onBindViewHolder(@NonNull TiempoAireAdapter.TiempoAireViewHolder holder, int position) {
         TiempoAire category = tiempoAireList.get(position);
         holder.textViewReference.setText("Monto de referencia: " + category.getAmount());
-
-
-       //holder.bind(category,onListener);
+        holder.bind(category,onListener);
 
     }
 
@@ -60,27 +59,29 @@ public class TiempoAireAdapter  extends RecyclerView.Adapter<TiempoAireAdapter.T
 
         TextView textViewReference;
         LinearLayout rcvItem;
+        Button buttonAddCar;
 
 
         public TiempoAireViewHolder(@NonNull View itemView) {
             super(itemView);
-            rcvItem = itemView.findViewById(R.id.rcvItem);
+            rcvItem = itemView.findViewById(R.id.rcvItemAire);
             textViewReference=itemView.findViewById(R.id.textViewReference);
+            buttonAddCar=itemView.findViewById(R.id.addToCart);
             View viewTypeAmountV = itemView.findViewById(R.id.viewTypeAmount);
            if(!openPayment){
                 viewTypeAmountV.setVisibility(View.GONE);
            }
         }
-        public void bind(final ServiceConsult service, final TiempoAire.OnListener listener){
-           /* rcvItem.setOnClickListener(new View.OnClickListener() {
+        public void bind(final TiempoAire service,final OnListener listener){
+            buttonAddCar.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     listener.onItemClick(service);
                 }
-            });*/
+            });
         }
     }
     public interface OnListener{
-        void onItemClick(ServiceConsult service);
+        void onItemClick(TiempoAire service);
     }
 }

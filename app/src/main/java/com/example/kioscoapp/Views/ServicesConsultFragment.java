@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -14,10 +15,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.kioscoapp.Adapter.ConsultAdapter;
 import com.example.kioscoapp.Adapter.TiempoAireAdapter;
+import com.example.kioscoapp.Mappers.Mappers;
 import com.example.kioscoapp.Model.Consult;
 import com.example.kioscoapp.Model.ResponseConsult;
 import com.example.kioscoapp.Model.TiempoAire;
 import com.example.kioscoapp.R;
+import com.example.kioscoapp.Services.Local.CarLocalService;
 import com.example.kioscoapp.Services.ServiceConsult;
 import com.example.kioscoapp.Services.TiempoAireService;
 
@@ -97,8 +100,10 @@ public class ServicesConsultFragment extends Fragment {
         recyclerViewCat.setAdapter(new ConsultAdapter(getContext(), consultArrayList, new ConsultAdapter.OnListener(){
 
             @Override
-            public void onItemClick(ServiceConsult service) {
-
+            public void onItemClick(Consult service) {
+                CarLocalService carLocalService=new CarLocalService(getContext());
+                carLocalService.addServicesToCar(Mappers.Map(service,invoiceNumber,providerName,false));
+                Toast.makeText(getContext(),"Servicio agregado exitosamente",Toast.LENGTH_LONG).show();
             }
         }));
     }

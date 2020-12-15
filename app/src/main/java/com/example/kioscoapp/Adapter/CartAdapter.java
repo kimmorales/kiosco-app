@@ -44,13 +44,24 @@ public class CartAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         convertView = inflater.inflate(R.layout.item_recharge, null);
         TextView txtName = (TextView) convertView.findViewById(R.id.nameRecharge);
         TextView txtId = (TextView) convertView.findViewById(R.id.idRecharge);
+        TextView txtPrice = (TextView) convertView.findViewById(R.id.priceRecharge);
         ImageView imageViewDelete=convertView.findViewById(R.id.imageDelete);
+
         txtName.setText(data.get(position).getServiceName());
-        txtId.setText(data.get(position).getAmount());
+        txtId.setText(data.get(position).getAccountNumber());
+        txtPrice.setText(data.get(position).getAmount());
+
+        imageViewDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onListener.onClickDelete(data.get(position));
+            }
+        });
+
         return convertView;
     }
 
