@@ -52,13 +52,14 @@ public class ShoppingCartActivity extends AppCompatActivity {
             i++;
             acum+=Double.parseDouble(service.getAmount());
         }
-        textViewServices.setText(String.valueOf(i));
+        textViewServices.setText(String.valueOf(i)+" Servicios");
         textViewTotal.setText(String.valueOf(acum));
     }
 
     private void deleteService(ServicesByCarMoneyCenter service){
         CarLocalService carLocalService= new CarLocalService(this);
         ArrayList<ServicesByCarMoneyCenter> services=carLocalService.deleteServicesCar(service);
+        getTotal(services);
         lvShoppingCart.setAdapter(new CartAdapter(this, services, new CartAdapter.OnListener() {
             @Override
             public void onClickDelete(ServicesByCarMoneyCenter services) {
