@@ -38,12 +38,13 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class SelectedProviderActivity extends Fragment {
-    private static final String PROVIDER_NAME = "param1";
-    private static final String TAG_TITLE = "param2";
+    private static final String PROVIDER_NAME = "providerName";
+    private static final String TAG_TITLE = "tagTitle";
     private static final String COUNTRY_CODE = "countryCode";
     private static final String COMMERCE_ID ="commerceId";
     private static final String SERVICE_NAME ="serviceName";
-    private static final Boolean IS_TIEMPO_AIRE = false, OPEN_PAYMENT = false;
+    private static final String IS_TIEMPO_AIRE = "isTiempoAire";
+    private static final String OPEN_PAYMENT = "openPayment";
     private String providerName;
     private String tagTitle;
     private String countryCode;
@@ -57,18 +58,19 @@ public class SelectedProviderActivity extends Fragment {
     OnListener mlistener;
 
 
-    public static SelectedProviderActivity newInstance(String providerName, String tagTitle,Boolean isTiempoAire,
-                                                       Boolean openPayment, String countryCode,
+    public static SelectedProviderActivity newInstance(String providerName, String tagTitle,String isTiempoAire,
+                                                       String openPayment, String countryCode,
                                                        String commerceIdCode, String serviceName) {
         SelectedProviderActivity fragment = new SelectedProviderActivity();
         Bundle args = new Bundle();
         args.putString(PROVIDER_NAME, providerName);
         args.putString(TAG_TITLE, tagTitle);
-        args.putBoolean(String.valueOf(IS_TIEMPO_AIRE), isTiempoAire);
-        args.putBoolean(String.valueOf(OPEN_PAYMENT), openPayment);
+        args.putBoolean(IS_TIEMPO_AIRE, Boolean.parseBoolean(isTiempoAire));
+        args.putBoolean(OPEN_PAYMENT, Boolean.parseBoolean(openPayment));
         args.putString(COMMERCE_ID, commerceIdCode);
         args.putString(COUNTRY_CODE, countryCode);
         args.putString(SERVICE_NAME, serviceName);
+        System.out.println("args");
         System.out.println(args);
         fragment.setArguments(args);
         return fragment;
@@ -114,20 +116,28 @@ public class SelectedProviderActivity extends Fragment {
 
             @Override
             public void onClick(View view) {
-                //getPending();
-                //getServiceConsultPending();
                 if (TextUtils.isEmpty(editTextServiceNumber.getText())) {
                     warning.setVisibility(View.VISIBLE);
-                   //
+                }
+                else if(isTiempoAire){
+                    mlistener.goToTiempoAire(serviceName, providerName, countryCode, commerceId, editTextServiceNumber.getText().toString(),openPayment);
+                }
+                else{
+                    mlistener.goToServicesConsult(countryCode,commerceId,serviceName, providerName, editTextServiceNumber.getText().toString());
+                }
+               //mlistener.goToServicesConsult(serviceName, providerName, editTextServiceNumber.getText().toString());
+
+               /* if (TextUtils.isEmpty(editTextServiceNumber.getText())) {
+                    warning.setVisibility(View.VISIBLE);
                 }
                 else {
                     mlistener.goToTiempoAire(serviceName, providerName, countryCode, commerceId, editTextServiceNumber.getText().toString());
-                }
+                }*/
             }
         });
         return  v;
     }
-    public  void getPendingTiempoAire(){
+   /* public  void getPendingTiempoAire(){
         TiempoAireService tiempoAireService=new TiempoAireService();
 
         tiempoAireService.loadTiempoAirePending(getContext() , countryCode,
@@ -151,7 +161,9 @@ public class SelectedProviderActivity extends Fragment {
         tiempoAireService.loadServicesByName(getContext()).enqueue(new Callback<ResponseConsult>() {
             @Override
             public void onResponse(Call<ResponseConsult> call, Response<ResponseConsult> response) {
-                System.out.println("response.body()");
+                response.body();
+                System.out.println(response.body().getServicesConsult());
+
             }
 
             @Override
@@ -160,9 +172,10 @@ public class SelectedProviderActivity extends Fragment {
             }
         });
 
-    }
+    }*/
 
     public interface OnListener {
-        void goToTiempoAire(String serviceName, String providerName, String countryCode, String commerceId, String invoceNumber);
+        void goToTiempoAire(String serviceName, String providerName, String countryCode, String commerceId, String invoceNumber, Boolean openPayment);
+        void goToServicesConsult(String countryCode,String commerceId,String serviceName, String providerName,String invoceNumber);
     }
 }

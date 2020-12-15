@@ -80,7 +80,6 @@
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/shape_gray"
             android:padding="20dp">
 
             <LinearLayout
@@ -106,10 +105,10 @@
                     android:id="@+id/textViewWarning"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/red"
                     android:layout_marginBottom="10dp"
-                    android:visibility="gone"
-                    android:text="@string/ingrese_numero_consultar" />
+                    android:text="@string/ingrese_numero_consultar"
+                    android:textColor="@color/red"
+                    android:visibility="gone" />
 
                 <LinearLayout
                     android:layout_width="match_parent"

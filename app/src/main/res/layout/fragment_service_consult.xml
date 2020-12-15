@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginLeft="16dp"
+    android:layout_marginRight="16dp"
+    tools:context=".Views.ServicesConsultFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="729dp"
+        android:orientation="vertical"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="1dp"
+        tools:layout_editor_absoluteY="1dp">
+
+        <TextView
+            android:id="@+id/serviceTypeConsult"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:text="TextView"
+            android:textColor="@android:color/black"
+            android:textSize="24sp" />
+
+        <TextView
+            android:id="@+id/serviceNameConsult"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:text="TextView"
+            android:textColor="@android:color/black"
+            android:textSize="18sp" />
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="120px"
+
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:background="#ededed">
+
+            <TextView
+                android:id="@+id/textViewCustomerInfo"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_horizontal|center_vertical"
+                android:text="Seleccione el monto a recargar"
+                android:textColor="@color/cardview_dark_background" />
+        </FrameLayout>
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rcvServiceConsult"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="50dp"></androidx.recyclerview.widget.RecyclerView>
+
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

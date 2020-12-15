@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class ResponseConsult {
     private String responseCode;
-    private ArrayList<Consult> data;
+    private ArrayList<Consult> servicesConsult;
 
     public String getResponseCode() {
         return responseCode;
@@ -14,11 +14,11 @@ public class ResponseConsult {
         this.responseCode = responseCode;
     }
 
-    public ArrayList<Consult> getData() {
-        return data;
+    public ArrayList<Consult> getServicesConsult() {
+        return servicesConsult;
     }
 
-    public void setData(ArrayList<Consult> data) {
-        this.data = data;
+    public void setServicesConsult(ArrayList<Consult> servicesConsult) {
+        this.servicesConsult = servicesConsult;
     }
 }

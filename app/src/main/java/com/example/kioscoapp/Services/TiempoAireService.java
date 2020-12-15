@@ -26,7 +26,7 @@ public class TiempoAireService {
         String country = localService.getCountry();
         String format = localService.getFormat();
         Call<ArrayList<TiempoAire>> categories = service.getIsTiempoAirePending(countryCode,localService.getFormat() ,
-               "10002" ,"3223535");
+               serviceID ,invoceNumber);
 
         return categories;
     }

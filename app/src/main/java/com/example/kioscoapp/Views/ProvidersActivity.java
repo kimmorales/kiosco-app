@@ -81,9 +81,8 @@ public class ProvidersActivity extends Fragment {
             @Override
             public void onItemClick(ServiceByNameMoneyCenter service) {
                 mlistener.goToSelectedProvider(service.getDescription(),
-                        service.getTag_Input_Data(),
-                        Boolean.parseBoolean(service.getIs_Tiempo_Aire()),
-                        Boolean.parseBoolean(service.getOpen_Payment()),
+                        service.getTag_Input_Data(),service.getIs_Tiempo_Aire(),
+                        service.getOpen_Payment(),
                         service.getCountry_Code(),
                         service.getCommerce_Id_WM(),
                         service.getName());
@@ -121,8 +120,8 @@ public class ProvidersActivity extends Fragment {
     }
     public interface OnListener {
         void goToSelectedProvider(String providerName, String tagTitle,
-                                  Boolean isTiempoAire,
-                                  Boolean openPayment,
+                                  String isTiempoAire,
+                                  String openPayment,
                                   String countryCode,
                                   String commerceIdWm,
                                   String name);
