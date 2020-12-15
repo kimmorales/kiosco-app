@@ -87,7 +87,6 @@ public class TiempoAireFragment extends Fragment {
                 commerceId ,invoiceNumber).enqueue(new Callback<ArrayList<TiempoAire>>() {
             @Override
             public void onResponse(Call<ArrayList<TiempoAire>> call, Response<ArrayList<TiempoAire>> response) {
-                //mlistener.goToTiempoAire();
                 if(response.isSuccessful() && response.body().size()>0){
                     loadingTiempoAire.setVisibility(View.GONE);
                     setTiempoAireItems(response.body());
@@ -95,13 +94,11 @@ public class TiempoAireFragment extends Fragment {
                 else {
                     loadingTiempoAire.setVisibility(View.GONE);
                     notFoundData.setVisibility(View.VISIBLE);
-                   //mlistener.goToNotFound();
                 }
             }
 
             @Override
             public void onFailure(Call<ArrayList<TiempoAire>> call, Throwable t) {
-                System.out.println(t.getMessage());
                 loadingTiempoAire.setVisibility(View.GONE);
             }
         });
@@ -141,7 +138,6 @@ public class TiempoAireFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View v= inflater.inflate(R.layout.fragment_tiempo_aire, container, false);
         recyclerViewCat=v.findViewById(R.id.rcvTiempoAire);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
@@ -160,6 +156,5 @@ public class TiempoAireFragment extends Fragment {
 
     public interface OnListener {
         //void goProvidersActivity(String id);
-        void goToNotFound();
     }
 }

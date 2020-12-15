@@ -44,7 +44,7 @@ public class ConsultAdapter extends RecyclerView.Adapter<ConsultAdapter.ConsultA
     public void onBindViewHolder(@NonNull ConsultAdapter.ConsultAdapterViewHolder holder, int position) {
         Consult consult = tiempoAireList.get(position);
         holder.textViewTotalAmountTextV.setText(consult.getAmount());
-        holder.textViewExpirationDateTextV.setText(consult.getDateExpiration());
+        holder.textViewExpirationDateTextV.setText("Vence: " + consult.getDateExpiration());
         holder.textViewMonthTextV.setText(consult.getDateCreate());
         holder.textViewStatusTextV.setText("Vencido");
         //holder.bind(category,onListener);

@@ -44,7 +44,14 @@ public class TiempoAireAdapter  extends RecyclerView.Adapter<TiempoAireAdapter.T
     @Override
     public void onBindViewHolder(@NonNull TiempoAireAdapter.TiempoAireViewHolder holder, int position) {
         TiempoAire category = tiempoAireList.get(position);
-        holder.textViewReference.setText("Monto de referencia: " + category.getAmount());
+        String amount = String.valueOf(category.getAmount());
+        if(openPayment){
+            holder.textViewReference.setText("Monto de referencia: " + amount);
+        }
+        else {
+            holder.textViewReference.setText(amount);
+        }
+
 
 
        //holder.bind(category,onListener);
