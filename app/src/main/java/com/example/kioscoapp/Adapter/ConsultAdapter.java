@@ -4,10 +4,12 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.kioscoapp.Model.Consult;
@@ -47,7 +49,7 @@ public class ConsultAdapter extends RecyclerView.Adapter<ConsultAdapter.ConsultA
         holder.textViewExpirationDateTextV.setText("Vence: " + consult.getDateExpiration());
         holder.textViewMonthTextV.setText(consult.getDateCreate());
         holder.textViewStatusTextV.setText("Vencido");
-        //holder.bind(category,onListener);
+        holder.bind(consult,onListener);
 
     }
 
@@ -62,13 +64,14 @@ public class ConsultAdapter extends RecyclerView.Adapter<ConsultAdapter.ConsultA
 
 
     public interface OnListener{
-        void onItemClick(ServiceConsult service);
+        void onItemClick(Consult service);
     }
 
     public class ConsultAdapterViewHolder extends RecyclerView.ViewHolder {
 
         TextView textViewMonthTextV, textViewStatusTextV, textViewExpirationDateTextV,textViewTotalAmountTextV;
-       // LinearLayout rcvItem;
+        CardView cvServiceConsult;
+        Button buttonService;
 
         public ConsultAdapterViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -76,15 +79,16 @@ public class ConsultAdapter extends RecyclerView.Adapter<ConsultAdapter.ConsultA
             textViewStatusTextV = itemView.findViewById(R.id.textViewStatus);
             textViewExpirationDateTextV = itemView.findViewById(R.id.textViewExpirationDate);
             textViewTotalAmountTextV = itemView.findViewById(R.id.textViewTotalAmount);
+            buttonService=itemView.findViewById(R.id.button2);
            // textViewReference=itemView.findViewById(R.id.textViewReference);
         }
-        public void bind(final ServiceConsult service, final TiempoAire.OnListener listener){
-           /* rcvItem.setOnClickListener(new View.OnClickListener() {
+        public void bind(final Consult service, final ConsultAdapter.OnListener listener){
+            cvServiceConsult.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     listener.onItemClick(service);
                 }
-            });*/
+            });
         }
     }
 }

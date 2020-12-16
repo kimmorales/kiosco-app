@@ -15,7 +15,7 @@ public class ServicesByCarMoneyCenter {
     private String mounth;
     private String dateExpiration;
     private String urlImgService;
-    private boolean indTiempoAire;
+    private boolean isTiempoAire;
     private String currency;
     private String dateCreate;
 
@@ -131,12 +131,12 @@ public class ServicesByCarMoneyCenter {
         this.urlImgService = urlImgService;
     }
 
-    public boolean isIndTiempoAire() {
-        return indTiempoAire;
+    public boolean isTiempoAire() {
+        return isTiempoAire;
     }
 
-    public void setIndTiempoAire(boolean indTiempoAire) {
-        this.indTiempoAire = indTiempoAire;
+    public void setTiempoAire(boolean tiempoAire) {
+        isTiempoAire = tiempoAire;
     }
 
     public String getCurrency() {
