@@ -1,25 +1,23 @@
 package com.example.kioscoapp.Adapter;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
-import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.kioscoapp.Model.Consult;
+import com.example.kioscoapp.Model.TiempoAire;
 import com.example.kioscoapp.R;
+import com.example.kioscoapp.Services.ServiceConsult;
 
 import java.util.ArrayList;
-import org.joda.time.DateTime;
-import com.example.kioscoapp.Utils.Utils;
 
 public class ConsultAdapter extends RecyclerView.Adapter<ConsultAdapter.ConsultAdapterViewHolder> {
     Context context;
@@ -44,28 +42,15 @@ public class ConsultAdapter extends RecyclerView.Adapter<ConsultAdapter.ConsultA
         return new ConsultAdapter.ConsultAdapterViewHolder(itemView);
     }
 
-    @SuppressLint("SetTextI18n")
-    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onBindViewHolder(@NonNull ConsultAdapter.ConsultAdapterViewHolder holder, int position) {
         Consult consult = tiempoAireList.get(position);
         holder.textViewTotalAmountTextV.setText(consult.getAmount());
-        DateTime expirationDate = new DateTime( consult.getDateExpiration());
-        DateTime currentDate = new DateTime();
-        int isExpiredDate = expirationDate.compareTo(currentDate);
-        holder.textViewExpirationDateTextV.setText("Vence: " + expirationDate.getYear() + "/"+
-                expirationDate.getMonthOfYear()+ "/" + expirationDate.getDayOfMonth());
-        holder.textViewMonthTextV.setText(Utils.getMonthOfTheYear(expirationDate.getMonthOfYear()-1));
-        holder.textViewStatusTextV.setText(isExpired(isExpiredDate));
+        holder.textViewExpirationDateTextV.setText("Vence: " + consult.getDateExpiration());
+        holder.textViewMonthTextV.setText(consult.getDateCreate());
+        holder.textViewStatusTextV.setText("Vencido");
         holder.bind(consult,onListener);
 
-    }
-    public String isExpired(int state){
-        if(state == 1){
-            return "Pendiente";
-        }else{
-            return "Vencido";
-        }
     }
 
     @Override
@@ -96,7 +81,6 @@ public class ConsultAdapter extends RecyclerView.Adapter<ConsultAdapter.ConsultA
             textViewTotalAmountTextV = itemView.findViewById(R.id.textViewTotalAmount);
             buttonService=itemView.findViewById(R.id.button2);
            // textViewReference=itemView.findViewById(R.id.textViewReference);
-            cvServiceConsult = itemView.findViewById(R.id.cvServiceConsult);
         }
         public void bind(final Consult service, final ConsultAdapter.OnListener listener){
             cvServiceConsult.setOnClickListener(new View.OnClickListener() {

@@ -55,20 +55,15 @@
             layout="@layout/fragment_not_found"
             android:visibility="gone" />
 
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rcvProviders"
+            android:layout_width="370dp"
+            android:layout_height="598dp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="50dp">
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rcvProviders"
-                android:layout_width="370dp"
-                android:layout_height="598dp"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
-                android:layout_marginBottom="50dp">
-
-            </androidx.recyclerview.widget.RecyclerView>
-        </ScrollView>
+        </androidx.recyclerview.widget.RecyclerView>
 
     </LinearLayout>
 
