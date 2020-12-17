@@ -19,6 +19,7 @@ import com.example.kioscoapp.ApiRest.Constants;
 import com.example.kioscoapp.Services.Local.CarLocalService;
 import com.example.kioscoapp.Services.Local.CountryLocalService;
 import com.example.kioscoapp.Services.Timer.MyCountDownTimer;
+import com.example.kioscoapp.Utils.Utils;
 import com.example.kioscoapp.Views.CategoriesFragment;
 import com.example.kioscoapp.Views.CountrySelectedFragment;
 import com.example.kioscoapp.Views.InactiveFragment;
@@ -105,9 +106,13 @@ public class MainActivity extends AppCompatActivity implements
     @Override
     protected void onRestart() {
         super.onRestart();
-        //this.counter.start();
+        try{
+            this.counter.start();
+            this.changeTotalToolbar();
+        }catch (NullPointerException e){
 
-        this.changeTotalToolbar();
+        }
+
     }
 
 
@@ -117,6 +122,7 @@ public class MainActivity extends AppCompatActivity implements
         super.onStop();
         this.counter.cancel();
     }
+
 
     @Override
     public void onUserInteraction(){
@@ -281,6 +287,7 @@ public class MainActivity extends AppCompatActivity implements
     public void leaveProcess(Fragment fragment) {
         CarLocalService carLocalService=new CarLocalService(this);
         carLocalService.clearCar();
+        textCartItemCount.setText("0");
         FragmentManager fm = getSupportFragmentManager();
         for(int i = 0; i < fm.getBackStackEntryCount(); ++i) {
             fm.popBackStack();

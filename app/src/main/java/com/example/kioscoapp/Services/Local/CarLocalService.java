@@ -95,6 +95,7 @@ public class CarLocalService  {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         setTotalItems(0);
         editor.clear();
+        editor.commit();
     }
 
 

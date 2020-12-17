@@ -1,5 +1,6 @@
 package com.example.kioscoapp.Utils;
 
+import android.app.ActivityManager;
 import android.content.Context;
 import android.widget.ImageView;
 
@@ -8,6 +9,7 @@ import com.pixplicity.sharp.Sharp;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
 
 import okhttp3.Cache;
 import okhttp3.Call;
@@ -25,6 +27,9 @@ public class Utils {
 
             return months[i];
         }
+
+
+
 
     public static void fetchSvg(Context context, String url, final ImageView target) {
         if (httpClient == null) {

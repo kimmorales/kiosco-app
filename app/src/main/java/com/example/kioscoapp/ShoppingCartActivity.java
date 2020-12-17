@@ -2,6 +2,7 @@ package com.example.kioscoapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -31,7 +32,7 @@ public class ShoppingCartActivity extends AppCompatActivity {
 
     private ListView lvShoppingCart;
     private TextView textViewTotal,textViewServices;
-    private Button btnGenerateCode;
+    private Button btnGenerateCode,buttonBack;
 
 
     @Override
@@ -42,7 +43,13 @@ public class ShoppingCartActivity extends AppCompatActivity {
         textViewTotal=findViewById(R.id.textViewTotal);
         btnGenerateCode=findViewById(R.id.btnGenerateCode);
         textViewServices=findViewById(R.id.txtServicesAmount);
-
+        buttonBack=findViewById(R.id.buttonGoBack);
+        buttonBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
         btnGenerateCode.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -78,10 +85,13 @@ public class ShoppingCartActivity extends AppCompatActivity {
     }
 
     private void saveTicket(){
+
         CarLocalService localService=new CarLocalService(this);
         CountryLocalService localVariable=new CountryLocalService(this);
         ArrayList<ServicesByCarMoneyCenter> items= localService.getItemsCar();
         if(items.size()>0){
+            final ProgressDialog dialog = ProgressDialog.show(this, "",
+                    "Generando Ticket...", true);
             Ticket ticket=new Ticket();
             ticket.setEmail("");
             ticket.setCountryCode(items.get(0).getCountryCode());
@@ -94,11 +104,13 @@ public class ShoppingCartActivity extends AppCompatActivity {
                 public void onResponse(Call<ArrayList<ConsultCodBarMoneyCenter>> call, Response<ArrayList<ConsultCodBarMoneyCenter>> response) {
                     System.out.println(response.body().toString());
                     goToPaymentCode(response.body());
+                    dialog.cancel();
                 }
 
                 @Override
                 public void onFailure(Call<ArrayList<ConsultCodBarMoneyCenter>> call, Throwable t) {
                     System.out.println(t.getMessage());
+                    dialog.cancel();
                 }
             });
         }else{
