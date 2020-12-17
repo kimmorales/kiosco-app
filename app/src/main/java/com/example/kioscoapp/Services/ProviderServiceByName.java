@@ -23,7 +23,6 @@ public class ProviderServiceByName {
     public Call<ResponseServicesByName> loadServicesByName(Context context, String categoryId){
         ApiService service = restApiAdapter.getClientService();
         CountryLocalService localService= new CountryLocalService(context);
-        //TODO cambiar el parametro de obtener categorias money center
         Call<ResponseServicesByName> categories = service.getServicesByName(localService.getCountry(),localService.getFormat(),categoryId,"1", Constants.ENV);
         return categories;
     }

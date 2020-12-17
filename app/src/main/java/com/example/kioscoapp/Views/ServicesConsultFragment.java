@@ -22,6 +22,7 @@ import com.example.kioscoapp.Model.ResponseConsult;
 import com.example.kioscoapp.Model.TiempoAire;
 import com.example.kioscoapp.R;
 import com.example.kioscoapp.Services.Local.CarLocalService;
+import com.example.kioscoapp.Services.Local.ICarLocalService;
 import com.example.kioscoapp.Services.ServiceConsult;
 import com.example.kioscoapp.Services.TiempoAireService;
 
@@ -41,6 +42,8 @@ public class ServicesConsultFragment extends Fragment {
     RecyclerView recyclerViewCat;
     EditText searchView;
     OnListener mlistener;
+
+
 
 
     private String countryCode;
@@ -74,6 +77,7 @@ public class ServicesConsultFragment extends Fragment {
         ServiceConsult serviceConsult= new ServiceConsult();
 
         serviceConsult.loadServicesByName(getContext(),countryCode,commerceId,invoiceNumber,"KioskosApp").enqueue(new Callback<ResponseConsult>() {
+            //TODO PREGUNTAR USUARIO SI SE ENVIA COMO CONSTANTE
             @Override
             public void onResponse(Call<ResponseConsult> call, Response<ResponseConsult> response) {
                 response.body();
@@ -101,6 +105,7 @@ public class ServicesConsultFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         if (getActivity() instanceof ServicesConsultFragment.OnListener)
             mlistener = (ServicesConsultFragment.OnListener) getActivity();
+
     }
 
     private void setItems (final ArrayList<Consult> consultArrayList){
@@ -110,6 +115,7 @@ public class ServicesConsultFragment extends Fragment {
             public void onItemClick(Consult service) {
                 CarLocalService carLocalService=new CarLocalService(getContext());
                 carLocalService.addServicesToCar(Mappers.Map(service,invoiceNumber,providerName,false));
+                mlistener.changeTotalConsult();
                 Toast.makeText(getContext(),"Servicio agregado exitosamente",Toast.LENGTH_LONG).show();
             }
         }));
@@ -151,5 +157,6 @@ public class ServicesConsultFragment extends Fragment {
 
     public interface OnListener {
         void goToNotFound();
+        void changeTotalConsult();
     }
 }

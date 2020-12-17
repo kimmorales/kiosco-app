@@ -11,11 +11,13 @@ import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Observable;
 
-public class CarLocalService {
+public class CarLocalService  {
 
     Context context;
     SharedPreferences sharedPreferences;
+
 
 
 
@@ -23,6 +25,7 @@ public class CarLocalService {
 
         this.context = context;
         this.sharedPreferences = context.getSharedPreferences(Constants.SHARED_PREFERENCES_CAR,context.MODE_PRIVATE);
+
     }
 
     public ArrayList<ServicesByCarMoneyCenter> getItemsCar(){
@@ -47,12 +50,19 @@ public class CarLocalService {
         editor.commit();
     }
 
+    public String getTotalItems(){
+        int total=sharedPreferences.getInt(Constants.LOCAL_VARIABLE_TOTAL_CAR,0);
+        String totalParser= String.valueOf(total);
+        return totalParser;
+    }
+
     public void addServicesToCar(ServicesByCarMoneyCenter service){
         ArrayList<ServicesByCarMoneyCenter> items=getItemsCar();
         GeneralResponse<ServicesByCarMoneyCenter> generalResponse=new GeneralResponse<>();
         generalResponse.setResponseCode("200");
         items.add(service);
         generalResponse.setData(items);
+        setTotalItems(items.size());
         Gson gson=new Gson();
         String json=gson.toJson(generalResponse);
         SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -69,7 +79,7 @@ public class CarLocalService {
         int index=searchService(services.getServiceId(),items);
         items.remove(index);
 
-
+        setTotalItems(items.size());
         Gson gson=new Gson();
         String json=gson.toJson(generalResponse);
         SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -83,6 +93,7 @@ public class CarLocalService {
 
     public void clearCar(){
         SharedPreferences.Editor editor = sharedPreferences.edit();
+        setTotalItems(0);
         editor.clear();
     }
 

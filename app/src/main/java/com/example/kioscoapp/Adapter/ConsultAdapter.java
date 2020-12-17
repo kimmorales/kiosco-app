@@ -79,11 +79,12 @@ public class ConsultAdapter extends RecyclerView.Adapter<ConsultAdapter.ConsultA
             textViewStatusTextV = itemView.findViewById(R.id.textViewStatus);
             textViewExpirationDateTextV = itemView.findViewById(R.id.textViewExpirationDate);
             textViewTotalAmountTextV = itemView.findViewById(R.id.textViewTotalAmount);
+            cvServiceConsult=itemView.findViewById(R.id.cvServiceConsult);
             buttonService=itemView.findViewById(R.id.button2);
            // textViewReference=itemView.findViewById(R.id.textViewReference);
         }
         public void bind(final Consult service, final ConsultAdapter.OnListener listener){
-            cvServiceConsult.setOnClickListener(new View.OnClickListener() {
+            buttonService.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     listener.onItemClick(service);

@@ -64,6 +64,8 @@ public class InactiveFragment extends Fragment {
         }.start();
     }
 
+
+
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);

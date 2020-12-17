@@ -10,9 +10,9 @@ public class Constants {
     public static final String LOCAL_VARIABLE_COUNTRY="country";
     public static final String LOCAL_VARIABLE_FORMAT="format";
     public static final String LOCAL_VARIABLE_CAR="carServices";
-    public static final String LOCAL_VARIABLE_TOTAL_CAR="carServices";
+    public static final String LOCAL_VARIABLE_TOTAL_CAR="carTotal";
 
-    public static final long MILISECONDS_MAX_INACTIVE=30000;
+    public static final long MILISECONDS_MAX_INACTIVE=20000;
     public static final long COUNTER_INACTIVE=60000;
 
 }

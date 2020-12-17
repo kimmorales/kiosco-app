@@ -24,7 +24,6 @@ public class CategoryMoneyCenterService {
     public Call<ResponseCategories> loadCategories(Context context){
         ApiService service = restApiAdapter.getClientService();//www.walmart/countries
         CountryLocalService localService= new CountryLocalService(context);
-        //TODO cambiar el parametro de obtener categorias money center
         Call<ResponseCategories> categories = service.getCategoriesMoneyCenter(localService.getCountry(),localService.getFormat(), Constants.ENV);
         return categories;
     }
