@@ -19,6 +19,8 @@ import com.example.kioscoapp.R;
 
 import java.util.ArrayList;
 import org.joda.time.DateTime;
+
+import com.example.kioscoapp.Services.Local.CountryLocalService;
 import com.example.kioscoapp.Utils.Utils;
 
 public class ConsultAdapter extends RecyclerView.Adapter<ConsultAdapter.ConsultAdapterViewHolder> {
@@ -49,7 +51,8 @@ public class ConsultAdapter extends RecyclerView.Adapter<ConsultAdapter.ConsultA
     @Override
     public void onBindViewHolder(@NonNull ConsultAdapter.ConsultAdapterViewHolder holder, int position) {
         Consult consult = tiempoAireList.get(position);
-        holder.textViewTotalAmountTextV.setText(consult.getAmount());
+        CountryLocalService localService= new CountryLocalService(context);
+        holder.textViewTotalAmountTextV.setText(localService.getCurrency() + consult.getAmount());
         DateTime expirationDate = new DateTime( consult.getDateExpiration());
         DateTime currentDate = new DateTime();
         int isExpiredDate = expirationDate.compareTo(currentDate);

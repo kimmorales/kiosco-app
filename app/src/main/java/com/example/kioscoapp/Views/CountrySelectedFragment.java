@@ -46,7 +46,8 @@ public class CountrySelectedFragment extends Fragment {
     OnListener mListener;
     private Map<String, Long> map = new HashMap<>();
     private Map<String, Long> mapFormat = new HashMap<>();
-
+    private ArrayList<Country> countriesList;
+    private String currency;
     public CountrySelectedFragment() {
         // Required empty public constructor
     }
@@ -88,7 +89,7 @@ public class CountrySelectedFragment extends Fragment {
                     long id  = map.get(key);
                     CountryLocalService local=new CountryLocalService(getContext());
                     local.setCountry(String.valueOf(id));
-
+                    local.setCurrency(currency);
                     key = spinnerStore.getSelectedItem().toString();
                     id  = mapFormat.get(key);
                     local.setFormat(String.valueOf(id));
@@ -104,7 +105,7 @@ public class CountrySelectedFragment extends Fragment {
 
     }
 
-    public void setCountries(List<Country> countries){
+    public void setCountries(final List<Country> countries){
         ArrayList<String> countriesNames=new ArrayList<>();
         map.clear();
         for (Country country:countries
@@ -121,6 +122,7 @@ public class CountrySelectedFragment extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 String key = (String) adapterView.getItemAtPosition(i);
+                currency = countriesList.get(i).getCurrency();
                 long id  = map.get(key);
                 System.out.println(id);
             }
@@ -183,8 +185,8 @@ public class CountrySelectedFragment extends Fragment {
         zone.loadCountries().enqueue(new Callback<GeneralResponse<Country>>() {
             @Override
             public void onResponse(Call<GeneralResponse<Country>> call, Response<GeneralResponse<Country>> response) {
-                ArrayList<Country> countries= response.body().getData();
-                setCountries(countries);
+                countriesList = response.body().getData();
+                setCountries(countriesList);
 
             }
 
