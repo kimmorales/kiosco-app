@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.kioscoapp.Model.CategoriesMoneyCenter;
 import com.example.kioscoapp.R;
+import com.example.kioscoapp.Utils.Utils;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -47,7 +48,9 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.Ca
         holder.textViewName.setText(category.getName());
         holder.bind(category,onListener);
         if(!category.getLogo().isEmpty() && category.getLogo()!=null){
-            Picasso.get().load(category.getLogo()).into(holder.circleImage);
+
+            Utils.fetchSvg(context,category.getLogo(),holder.circleImage);
+            //Picasso.get().load(category.getLogo()).into(holder.circleImage);
         }
 
     }
