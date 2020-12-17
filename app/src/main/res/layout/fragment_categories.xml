@@ -13,6 +13,25 @@
         android:gravity="center_horizontal"
         android:orientation="vertical">
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Autogestion de servcios"
+            android:textSize="20sp"
+            android:textColor="@android:color/black"
+          ></TextView>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:textAlignment="center"
+            android:text="selecciona una categoria o busca el servicio que deseas pagar"
+            android:textSize="13sp"
+
+            ></TextView>
+
         <EditText
             android:id="@+id/svCategories"
             android:layout_width="match_parent"

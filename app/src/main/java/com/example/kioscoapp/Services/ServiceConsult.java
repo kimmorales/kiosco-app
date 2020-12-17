@@ -21,7 +21,6 @@ public class ServiceConsult {
     public Call<ResponseConsult> loadServicesByName(Context context, String CountryCode,String serviceId, String idCustomer, String usuario){
         ApiService service = restApiAdapter.getClientService();
         CountryLocalService localService= new CountryLocalService(context);
-        //TODO cambiar el parametro de obtener categorias money center
         //CountryCode=CRC&FormatId=1&serviceId=71&idCustomer=8456231485536254&usuario=KioskosApp
         Call<ResponseConsult> services =
                 service.servicesConsultById(CountryCode,localService.getFormat(),serviceId,idCustomer,usuario);

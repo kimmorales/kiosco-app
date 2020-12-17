@@ -45,7 +45,7 @@ public class TiempoAireFragment extends Fragment {
     private static final String OPEN_PAYMENT = "openPayment";
     RecyclerView recyclerViewCat;
     EditText searchView;
-    CategoriesFragment.OnListener mlistener;
+    OnListener mlistener;
     ProgressBar loadingTiempoAire;
     View notFoundData;
     private String countryCode;
@@ -111,8 +111,8 @@ public class TiempoAireFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-       /* if (getActivity() instanceof CategoriesFragment.OnListener)
-            mlistener = (CategoriesFragment.OnListener) getActivity();*/
+        if (getActivity() instanceof OnListener)
+            mlistener = (OnListener) getActivity();
     }
 
     private void setTiempoAireItems (final ArrayList<TiempoAire> tiempoAireArrayList){
@@ -122,6 +122,7 @@ public class TiempoAireFragment extends Fragment {
             public void onItemClick(TiempoAire service) {
                 CarLocalService carLocalService= new CarLocalService(getContext());
                 carLocalService.addServicesToCar(Mappers.Map(service,invoiceNumber,providerName,openPayment));
+                mlistener.changeTotalTiempoAire();
                 Toast.makeText(getContext(),"Servicio agregado exitosamente",Toast.LENGTH_LONG).show();
             }
         }));
@@ -160,6 +161,7 @@ public class TiempoAireFragment extends Fragment {
     }
 
     public interface OnListener {
+        void changeTotalTiempoAire();
         //void goProvidersActivity(String id);
     }
 }

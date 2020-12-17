@@ -41,7 +41,7 @@ public class Mappers {
         services.setUrlImgService("");//TODO cambiar
         services.setDateCreate(consult.getDateCreate());
         services.setDateExpiration("");//TODO PREGUNTAR
-        services.setTr_Id("");
+        services.setTr_Id(consult.getItemNumber());
         return services;
     }
 }

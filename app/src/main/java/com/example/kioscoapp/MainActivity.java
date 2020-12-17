@@ -100,6 +100,24 @@ public class MainActivity extends AppCompatActivity implements
         });
     }
 
+
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        //this.counter.start();
+
+        this.changeTotalToolbar();
+    }
+
+
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        this.counter.cancel();
+    }
+
     @Override
     public void onUserInteraction(){
 
@@ -236,6 +254,24 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     @Override
+    public void changeTotalConsult() {
+        changeTotalToolbar();
+    }
+
+    private void changeTotalToolbar(){
+
+        try {
+            CarLocalService carLocalService=new CarLocalService(this);
+            String value=carLocalService.getTotalItems();
+            textCartItemCount.setText(value);
+        }catch (NullPointerException e){
+            textCartItemCount.setText("0");
+        }
+
+
+    }
+
+    @Override
     public void restartTimer() {
         this.counter.cancel();
         this.counter.start();
@@ -255,5 +291,10 @@ public class MainActivity extends AppCompatActivity implements
     @Override
     public void continueProcess() {
         backStack();
+    }
+
+    @Override
+    public void changeTotalTiempoAire() {
+        changeTotalToolbar();
     }
 }

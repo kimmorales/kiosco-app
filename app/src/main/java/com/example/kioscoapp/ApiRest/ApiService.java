@@ -8,12 +8,14 @@ import com.example.kioscoapp.Model.ResponseCategories;
 import com.example.kioscoapp.Model.ResponseConsult;
 import com.example.kioscoapp.Model.ResponseServicesByName;
 import com.example.kioscoapp.Model.ResponseTiempoAire;
+import com.example.kioscoapp.Model.Ticket;
 import com.example.kioscoapp.Model.TiempoAire;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
@@ -35,7 +37,7 @@ public interface ApiService {
                                         );
 
     @POST("ticket")
-    Call<List<ConsultCodBarMoneyCenter>> getConsultAmountByServices();
+    Call<ArrayList<ConsultCodBarMoneyCenter>> saveConsultAmountByServices(@Body Ticket ticket);
 
     @GET("servicesByCategory")
     Call<ResponseServicesByName> getServicesByName(@Query("countryCode") String countryId,
