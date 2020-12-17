@@ -14,11 +14,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.kioscoapp.Model.CategoriesMoneyCenter;
 import com.example.kioscoapp.Model.ServiceByNameMoneyCenter;
 import com.example.kioscoapp.R;
+import com.example.kioscoapp.Utils.Utils;
+import com.squareup.picasso.Cache;
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Request;
 
 import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import okhttp3.OkHttpClient;
 
 public class ProviderAdapter extends RecyclerView.Adapter<ProviderAdapter.ProviderViewHolder> {
 
@@ -50,8 +54,13 @@ public class ProviderAdapter extends RecyclerView.Adapter<ProviderAdapter.Provid
         ServiceByNameMoneyCenter category = providers.get(position);
         holder.textViewName.setText(category.getDescription());
         holder.bind(category,onListener);
-        Picasso.get().load(category.getLogo()).into(holder.circleImage);
+        String userAvatarUrl = category.getLogo();
+        Utils.fetchSvg(context, userAvatarUrl, holder.circleImage);
+
+
+        //Picasso.get().load(category.getLogo()).into(holder.circleImage);
     }
+
 
     @Override
     public int getItemCount() {
