@@ -168,7 +168,7 @@ public class PaymentCodeActivity extends AppCompatActivity {
                     }
                 });
 
-                
+
                 // open the device
                 device.open(localDeviceName);
 
