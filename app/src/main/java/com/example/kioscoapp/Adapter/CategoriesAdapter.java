@@ -48,11 +48,9 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.Ca
         holder.textViewName.setText(category.getName());
         holder.bind(category,onListener);
         if(!category.getLogo().isEmpty() && category.getLogo()!=null){
-
             Utils.fetchSvg(context,category.getLogo(),holder.circleImage);
             //Picasso.get().load(category.getLogo()).into(holder.circleImage);
         }
-
     }
 
     @Override

@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.kioscoapp.Model.TiempoAire;
 import com.example.kioscoapp.R;
+import com.example.kioscoapp.Services.Local.CountryLocalService;
 import com.example.kioscoapp.Services.ServiceConsult;
 
 import java.util.ArrayList;
@@ -45,14 +46,13 @@ public class TiempoAireAdapter  extends RecyclerView.Adapter<TiempoAireAdapter.T
     @Override
     public void onBindViewHolder(@NonNull TiempoAireAdapter.TiempoAireViewHolder holder, int position) {
         TiempoAire category = tiempoAireList.get(position);
-        
-  
+        CountryLocalService localService= new CountryLocalService(context);
         String amount = String.valueOf(category.getAmount());
         if(openPayment){
-            holder.textViewReference.setText("Monto de referencia: " + amount);
+            holder.textViewReference.setText("Monto de referencia: " + localService.getCurrency() + amount);
         }
         else {
-            holder.textViewReference.setText(amount);
+            holder.textViewReference.setText(localService.getCurrency() + amount);
         }
       holder.bind(category,onListener);
 

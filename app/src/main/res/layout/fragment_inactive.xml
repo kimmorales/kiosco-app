@@ -29,7 +29,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:layout_gravity="center_horizontal"
-            android:text="¿Sighes ahí?"
+            android:text="¿Sigues ahí?"
             android:textSize="20sp"
             android:textColor="@android:color/black"
             >
@@ -42,7 +42,7 @@
             android:layout_gravity="center_horizontal"
             android:textAlignment="center"
             android:layout_marginTop="20dp"
-            android:text="El carrito se borrara por inactividad en menos de un minuto">
+            android:text="El carrito se borrará por inactividad en menos de un minuto">
 
         </TextView>
     </LinearLayout>

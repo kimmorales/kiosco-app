@@ -39,6 +39,16 @@ public class CountryLocalService {
         editor.putString(Constants.LOCAL_VARIABLE_FORMAT, value);
         editor.commit();
     }
+    public String getCurrency(){
+        this.sharedPref = context.getSharedPreferences(Constants.SHARED_PREFERENCES_INITIAL,context.MODE_PRIVATE);
+        return sharedPref.getString(Constants.LOCAL_VARIABLE_CURRENCY,"$");
+    }
 
+    public void setCurrency(String value){
+        this.sharedPref=context.getSharedPreferences(Constants.SHARED_PREFERENCES_INITIAL,context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putString(Constants.LOCAL_VARIABLE_CURRENCY, value);
+        editor.commit();
+    }
 
 }

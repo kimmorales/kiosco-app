@@ -15,4 +15,5 @@ public class Constants {
     public static final long MILISECONDS_MAX_INACTIVE=20000;
     public static final long COUNTER_INACTIVE=60000;
 
+    public static final String LOCAL_VARIABLE_CURRENCY = "" ;
 }
