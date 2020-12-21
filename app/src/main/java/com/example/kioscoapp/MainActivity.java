@@ -185,7 +185,7 @@ public class MainActivity extends AppCompatActivity implements
             }
         });
 
-
+        changeTotalToolbar();
 
         return true;
     }
