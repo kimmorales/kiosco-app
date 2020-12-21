@@ -22,16 +22,19 @@ import org.joda.time.DateTime;
 
 import com.example.kioscoapp.Services.Local.CountryLocalService;
 import com.example.kioscoapp.Utils.Utils;
+import com.google.android.material.button.MaterialButton;
 
 public class ConsultAdapter extends RecyclerView.Adapter<ConsultAdapter.ConsultAdapterViewHolder> {
     Context context;
     ArrayList<Consult> tiempoAireList;
+    int positionAdded;
     OnListener onListener;
 
-    public ConsultAdapter(Context context, ArrayList<Consult> consultArrayList, ConsultAdapter.OnListener onListener) {
+    public ConsultAdapter(Context context, ArrayList<Consult> consultArrayList, ConsultAdapter.OnListener onListener,int positionBefore) {
         this.context = context;
         this.tiempoAireList = consultArrayList;
         this.onListener = onListener;
+        this.positionAdded=positionBefore;
     }
     public ConsultAdapter(Context context){
         this.context = context;
@@ -55,6 +58,12 @@ public class ConsultAdapter extends RecyclerView.Adapter<ConsultAdapter.ConsultA
         holder.textViewTotalAmountTextV.setText(localService.getCurrency() + consult.getAmount());
         DateTime expirationDate = new DateTime( consult.getDateExpiration());
         DateTime currentDate = new DateTime();
+        if(!consult.isAdded() && position==this.positionAdded){
+            holder.buttonService.setEnabled(true);
+        }else{
+            holder.buttonService.setEnabled(false);
+        }
+
         int isExpiredDate = expirationDate.compareTo(currentDate);
         holder.textViewExpirationDateTextV.setText("Vence: " + expirationDate.getYear() + "/"+
                 expirationDate.getMonthOfYear()+ "/" + expirationDate.getDayOfMonth());
@@ -82,7 +91,7 @@ public class ConsultAdapter extends RecyclerView.Adapter<ConsultAdapter.ConsultA
 
 
     public interface OnListener{
-        void onItemClick(Consult service);
+        void onItemClick(Consult service,int position);
     }
 
     public class ConsultAdapterViewHolder extends RecyclerView.ViewHolder {
@@ -106,7 +115,7 @@ public class ConsultAdapter extends RecyclerView.Adapter<ConsultAdapter.ConsultA
             buttonService.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    listener.onItemClick(service);
+                    listener.onItemClick(service,positionAdded);
                 }
             });
         }

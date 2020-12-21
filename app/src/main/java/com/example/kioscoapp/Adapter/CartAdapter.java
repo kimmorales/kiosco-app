@@ -11,6 +11,9 @@ import android.widget.TextView;
 
 import com.example.kioscoapp.Model.ServicesByCarMoneyCenter;
 import com.example.kioscoapp.R;
+import com.example.kioscoapp.Utils.Utils;
+
+import org.joda.time.DateTime;
 
 import java.util.ArrayList;
 
@@ -52,8 +55,15 @@ public class CartAdapter extends BaseAdapter {
         ImageView imageViewDelete=convertView.findViewById(R.id.imageDelete);
 
         txtName.setText(data.get(position).getServiceName());
-        txtId.setText(data.get(position).getAccountNumber());
+
         txtPrice.setText(data.get(position).getAmount());
+
+        if(data.get(position).getDateExpiration()!="" && data.get(position).getDateExpiration()!=null){
+            DateTime expirationDate = new DateTime(data.get(position).getDateExpiration());
+            txtId.setText(data.get(position).getAccountNumber()+" "+ Utils.getMonthOfTheYear(expirationDate.getMonthOfYear()-1));
+        }else{
+            txtId.setText(data.get(position).getAccountNumber());
+        }
 
         imageViewDelete.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -22,6 +22,7 @@ import com.example.kioscoapp.Model.ResponseConsult;
 import com.example.kioscoapp.Model.TiempoAire;
 import com.example.kioscoapp.R;
 import com.example.kioscoapp.Services.Local.CarLocalService;
+import com.example.kioscoapp.Services.Local.CountryLocalService;
 import com.example.kioscoapp.Services.Local.ICarLocalService;
 import com.example.kioscoapp.Services.ServiceConsult;
 import com.example.kioscoapp.Services.TiempoAireService;
@@ -32,7 +33,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ServicesConsultFragment extends Fragment {
+public class ServicesConsultFragment extends Fragment implements ConsultAdapter.OnListener {
 
     private static final String COUNTRY_CODE = "countryCode";
     private static final String COMMERCE_ID ="commerceId";
@@ -40,6 +41,7 @@ public class ServicesConsultFragment extends Fragment {
     private static final String PROVIDER_NAME = "providerName";
     private static final String SERVICE_NAME = "serviceName";
     RecyclerView recyclerViewCat;
+    ArrayList<Consult> consults=new ArrayList<>();
     EditText searchView;
     OnListener mlistener;
 
@@ -83,7 +85,7 @@ public class ServicesConsultFragment extends Fragment {
                 response.body();
                 if(response.body().getServicesConsult() != null ){
                     loadinServicesConsult.setVisibility(View.GONE);
-                    setItems(response.body().getServicesConsult());
+                    setItems(response.body().getServicesConsult(),0);
                 }
                 else {
                     loadinServicesConsult.setVisibility(View.GONE);
@@ -108,18 +110,12 @@ public class ServicesConsultFragment extends Fragment {
 
     }
 
-    private void setItems (final ArrayList<Consult> consultArrayList){
-        recyclerViewCat.setAdapter(new ConsultAdapter(getContext(), consultArrayList, new ConsultAdapter.OnListener(){
-
-            @Override
-            public void onItemClick(Consult service) {
-                CarLocalService carLocalService=new CarLocalService(getContext());
-                carLocalService.addServicesToCar(Mappers.Map(service,invoiceNumber,providerName,false));
-                mlistener.changeTotalConsult();
-                Toast.makeText(getContext(),"Servicio agregado exitosamente",Toast.LENGTH_LONG).show();
-            }
-        }));
+    private void setItems (final ArrayList<Consult> consultArrayList,int positionCurrent){
+        consults=consultArrayList;
+        recyclerViewCat.setAdapter(new ConsultAdapter(getContext(), consultArrayList,this,positionCurrent));
     }
+
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -153,6 +149,16 @@ public class ServicesConsultFragment extends Fragment {
         notFoundData = v.findViewById(R.id.nota_found_service_consult);
         getServiceConsultPending();
         return  v;
+    }
+
+    @Override
+    public void onItemClick(Consult service, int position) {
+        CarLocalService carLocalService=new CarLocalService(getContext());
+        CountryLocalService countryLocalService=new CountryLocalService(getContext());
+        carLocalService.addServicesToCar(Mappers.Map(service,invoiceNumber,providerName,false,countryLocalService.getCurrency(),position));
+        mlistener.changeTotalConsult();
+        setItems(consults,position+1);
+        Toast.makeText(getContext(),"Servicio agregado exitosamente",Toast.LENGTH_LONG).show();
     }
 
     public interface OnListener {

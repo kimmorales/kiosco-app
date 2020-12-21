@@ -1,5 +1,7 @@
 package com.example.kioscoapp.Model;
 
+import androidx.annotation.Nullable;
+
 public class ServicesByCarMoneyCenter {
     private String serviceId;
     private String amount;
@@ -18,6 +20,16 @@ public class ServicesByCarMoneyCenter {
     private boolean isTiempoAire;
     private String currency;
     private String dateCreate;
+    @Nullable
+    private int position;
+
+    public int getPosition() {
+        return position;
+    }
+
+    public void setPosition(int position) {
+        this.position = position;
+    }
 
     public String getServiceId() {
         return serviceId;
@@ -153,5 +165,13 @@ public class ServicesByCarMoneyCenter {
 
     public void setDateCreate(String dateCreate) {
         this.dateCreate = dateCreate;
+    }
+
+    public boolean isPossibleToDelete(int position){
+        if(position>-1 && position>=getPosition()){
+            return true;
+        }else{
+            return false;
+        }
     }
 }

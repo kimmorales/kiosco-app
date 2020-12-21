@@ -46,9 +46,21 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvCategories"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            >
 
         </androidx.recyclerview.widget.RecyclerView>
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/flNotFound1">
+            <include
+                layout="@layout/fragment_not_found">
+
+            </include>
+        </FrameLayout>
+
+
     </LinearLayout>
 
 
