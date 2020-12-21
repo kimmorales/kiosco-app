@@ -35,6 +35,7 @@ public class ConsultCodBarMoneyCenter {
         private double serviceType;
         private String barcodeimg;
         private double addresRequired;
+        private String idBarcode;
 
         public double getServiceType() {
             return serviceType;
@@ -58,6 +59,14 @@ public class ConsultCodBarMoneyCenter {
 
         public void setAddresRequired(double addresRequired) {
             this.addresRequired = addresRequired;
+        }
+
+        public String getIdBarcode() {
+            return idBarcode;
+        }
+
+        public void setIdBarcode(String idBarcode) {
+            this.idBarcode = idBarcode;
         }
     }
 

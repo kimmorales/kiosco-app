@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.Point;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
@@ -15,7 +16,9 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.kioscoapp.Model.ServicesByCarMoneyCenter;
 import com.example.kioscoapp.R;
+import com.example.kioscoapp.Services.Local.CarLocalService;
 import com.toshiba.tgcsapi.AppContext;
 import com.toshiba.tgcsapi.POS;
 import com.toshiba.tgcsapi.POSDataEvent;
@@ -29,7 +32,10 @@ import com.toshiba.tgcsapi.TGCSMPOSException;
 import com.toshiba.tgcsapi.TGCSMPOSLogging;
 import com.toshiba.util.DeviceInfo;
 
+import org.joda.time.DateTime;
+
 import java.io.File;
+import java.util.ArrayList;
 
 public class PaymentCodeActivity extends AppCompatActivity {
 
@@ -43,6 +49,8 @@ public class PaymentCodeActivity extends AppCompatActivity {
     private static TGCSMPOS4610Printer device = null;
     private boolean initializationFlag = true;
     Bitmap codigoBarras;
+    private String  idBarcodeService = "";
+    private String  idBarcodeCharge = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +58,8 @@ public class PaymentCodeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_payment_code);
         String codService = getIntent().getExtras().getString("codService");
         String codRecharge = getIntent().getExtras().getString("codRecharge");
+        idBarcodeCharge = getIntent().getExtras().getString("idBarcodeCharge");
+        idBarcodeService = getIntent().getExtras().getString("idBarcodeService");
         error=false;
 
         webViewService=findViewById(R.id.webViewService);
@@ -199,48 +209,52 @@ public class PaymentCodeActivity extends AppCompatActivity {
      * @return: String result
      */
     private void PrinterReceipt(String logicalDeviceName) {
-        // Receipt content
-        String content = "\\x1B|N\\x1B|bC\\x1B|3C\\x1B|cACarrito Servicios\n";
-        content +=       "\\x1B|N\\x1B|cAMMM/DD/YY  HH:MM\n\n";
-        content +=       "\\x1B|cA\\x1B|bCStore Number:\\x1B|N 8888\n";
-        content +=       "\\x1B|cA\\x1B|bCSeller:\\x1B|N Kimberly Morales\n\n";
-        content +=       "\\x1B|cAItem 1 .................... $20\n";
-        content +=       "\\x1B|cAItem 7 .................... $80\n";
-        content +=       "\n";
-        content +=       "\\x1B|cA\\x1B|3C\\x1B|bCAmount .................... $100\n";
-        content +=       "\\x1B|cA\\x1B|NCreditCard (####-####-####-####)\n";
-        content +=       "\\x1B|cATAXES INCLUDED\n\n";
+        DateTime currentDate = new DateTime();
+        CarLocalService carLocalService= new CarLocalService(this);
+        ArrayList<ServicesByCarMoneyCenter> services= carLocalService.getItemsCar();
 
-        /* https://developer.android.com/guide/topics/resources/providing-resources#ResourcesFromCode */
-        Bitmap logo = BitmapFactory.decodeResource(getResources(), R.raw.sqtoshiba_gif);
-        Bitmap logoMem = BitmapFactory.decodeResource(getResources(), R.raw.sale);
+        String date = "\\x1B|N\\x1B|bC\\x1B|3C\\x1B|cA"+ currentDate.getDayOfMonth() + "/"+
+                currentDate.getMonthOfYear()+ "/" + currentDate.getYear() + "\n";
+        String title = "\\x1B|N\\x1B|bC\\x1B|3C\\x1B|cAMoney Center\n\n";
+        String subtitle = "\\x1B|cA\\x1B|3C\\x1B|bCCódigo de pago\n";
+
 
         try
         {
+
+            device.printNormal(POS.PTR_S_RECEIPT,date);
+            device.printNormal(POS.PTR_S_RECEIPT,title);
+            device.printNormal(POS.PTR_S_RECEIPT,subtitle);
+            for (int i=0; i< services.size() ; i++)
+            {
+                ServicesByCarMoneyCenter service = services.get(i);
+                String serviceInfo = "\\x1B|N\\x1B|bC\\x1B|3C\\x1B|cA"+ service.getServiceName() + "  "+
+                        service.getAccountNumber() + "/" + service.getAmount() + "\n";
+                device.printNormal(POS.PTR_S_RECEIPT, serviceInfo);
+
+            }
             // Use transactionPrint to buffer receipt data until it should be printed.
             device.transactionPrint(POS.PTR_S_RECEIPT,POS.PTR_TP_TRANSACTION);
-
-            // logo
-            device.printBitmap(POS.PTR_S_RECEIPT, logo, POS.PTR_BM_ASIS, POS.PTR_BC_CENTER);
-
-            // content
-            device.printNormal(POS.PTR_S_RECEIPT, content);
+            device.printNormal(POS.PTR_S_RECEIPT,
+                    "\\x1B|bC\\x1B|cAMuestre este código al cajero en la tienda\n\\x1B|bC\\x1B|cApara pagar tus servicios.\n\n");
 
             // barcode
-            device.printBarCode(POS.PTR_S_RECEIPT, "0123456789", POS.PTR_BCS_Code39, 100, 2, POS.PTR_BC_CENTER, POS.PTR_BC_TEXT_ABOVE);
+            if(idBarcodeService != null){
+                device.printBarCode(POS.PTR_S_RECEIPT,
+                        idBarcodeService, POS.PTR_BCS_Code128,
+                        100, 2, POS.PTR_BC_CENTER, POS.PTR_BC_TEXT_ABOVE);
+            }
+            if(idBarcodeCharge != null){
+                device.printBarCode(POS.PTR_S_RECEIPT,
+                        idBarcodeCharge, POS.PTR_BCS_Code128,
+                        100, 2, POS.PTR_BC_CENTER, POS.PTR_BC_TEXT_ABOVE);
+            }
 
             // Receipt footer.
-            device.printNormal(POS.PTR_S_RECEIPT, "\\x1B|bC\\x1B|cAThis ticket is needed for \n\\x1B|bC\\x1B|cAany return or exchange\n\n");
-
-            // Print Memory bitmap
-            TGCSMPOS4610Printer.ImageDimensions dimen = new TGCSMPOS4610Printer.ImageDimensions();
-            byte [] data = device.loadBitmap(POS.PTR_S_RECEIPT, logoMem, POS.PTR_BM_ASIS, dimen);
-
-            device.printMemoryBitmap(POS.PTR_S_RECEIPT, data, POS.PTR_BMT_GIF, POS.PTR_BM_ASIS, POS.PTR_BC_CENTER);
 
             // Print Normal
-            device.printNormal(POS.PTR_S_RECEIPT, "\\x1B|cA THANK YOU FOR YOUR BUSINESS\n\n");
-
+            device.printNormal(POS.PTR_S_RECEIPT, "\\x1B|cA Este tiquete no es una factura\n\n");
+            device.printNormal(POS.PTR_S_RECEIPT, "\\x1B|cA Válido por el día de hoy\n\n");
             // Paper cut
             device.printNormal(POS.PTR_S_RECEIPT, "\\x1B|fP");
 

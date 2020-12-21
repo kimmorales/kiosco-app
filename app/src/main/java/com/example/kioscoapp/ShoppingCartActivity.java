@@ -125,8 +125,10 @@ public class ShoppingCartActivity extends AppCompatActivity {
         for(int i=0;i<codBars.size();i++){
             if(codBars.get(i).getServiceType()==1){
                 intent.putExtra("codService",codBars.get(i).getBarcodeimg());
+                intent.putExtra("idBarcodeService", codBars.get(i).getIdBarcode());
             }else{
                 intent.putExtra("codRecharge",codBars.get(0).getBarcodeimg());
+                intent.putExtra("idBarcodeCharge", codBars.get(i).getIdBarcode());
             }
         }
         intent.putExtra("dateExp",codes.get(0).getExpirantionDateCodBar());
