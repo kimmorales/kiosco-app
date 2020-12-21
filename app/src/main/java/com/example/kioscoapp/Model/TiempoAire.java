@@ -14,7 +14,7 @@ public class TiempoAire {
     private String ItemNumber;
     private String Service_Id;
     private String Description;
-    private int Amount;
+    private double Amount;
     private String Country_Code;
     private String Format_Id;
     private String Format_Name;
@@ -44,11 +44,11 @@ public class TiempoAire {
         Description = description;
     }
 
-    public int getAmount() {
+    public double getAmount() {
         return Amount;
     }
 
-    public void setAmount(int amount) {
+    public void setAmount(double amount) {
         Amount = amount;
     }
 

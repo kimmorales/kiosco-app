@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -71,6 +72,7 @@ public class TiempoAireAdapter  extends RecyclerView.Adapter<TiempoAireAdapter.T
         TextView textViewReference;
         LinearLayout rcvItem;
         Button buttonAddCar;
+        EditText editTextNumberAmount;
 
 
         public TiempoAireViewHolder(@NonNull View itemView) {
@@ -78,6 +80,7 @@ public class TiempoAireAdapter  extends RecyclerView.Adapter<TiempoAireAdapter.T
             rcvItem = itemView.findViewById(R.id.rcvItemAire);
             textViewReference=itemView.findViewById(R.id.textViewReference);
             buttonAddCar=itemView.findViewById(R.id.addToCart);
+            editTextNumberAmount=itemView.findViewById(R.id.editTextNumberAmount);
             View viewTypeAmountV = itemView.findViewById(R.id.viewTypeAmount);
            if(!openPayment){
                 viewTypeAmountV.setVisibility(View.GONE);
@@ -87,7 +90,17 @@ public class TiempoAireAdapter  extends RecyclerView.Adapter<TiempoAireAdapter.T
             buttonAddCar.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    String amountText=editTextNumberAmount.getText().toString();
+                    if(openPayment && amountText!=null  && !amountText.equals("")){
+                        try{
+                            service.setAmount(Double.parseDouble(editTextNumberAmount.getText().toString()));
+                        }catch (Exception e){
+                            service.setAmount(0);
+                        }
+
+                    }
                     listener.onItemClick(service);
+
                 }
             });
         }
