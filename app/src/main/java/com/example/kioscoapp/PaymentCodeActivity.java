@@ -26,6 +26,8 @@ import android.widget.Toast;
 import com.example.kioscoapp.Model.ServicesByCarMoneyCenter;
 import com.example.kioscoapp.R;
 import com.example.kioscoapp.Services.Local.CarLocalService;
+import com.example.kioscoapp.Services.Local.CountryLocalService;
+import com.example.kioscoapp.Views.InitialScreenFragment;
 import com.toshiba.tgcsapi.AppContext;
 import com.toshiba.tgcsapi.POS;
 import com.toshiba.tgcsapi.POSDataEvent;
@@ -222,49 +224,57 @@ public class PaymentCodeActivity extends AppCompatActivity {
         DateTime currentDate = new DateTime();
         CarLocalService carLocalService= new CarLocalService(this);
         ArrayList<ServicesByCarMoneyCenter> services= carLocalService.getItemsCar();
-
+        CountryLocalService localService= new CountryLocalService(this);
         String date = "\\x1B|N\\x1B|bC\\x1B|3C\\x1B|cA"+ currentDate.getDayOfMonth() + "/"+
                 currentDate.getMonthOfYear()+ "/" + currentDate.getYear() + "\n";
-        String title = "\\x1B|N\\x1B|bC\\x1B|3C\\x1B|cAMoney Center\n\n";
+        String title = "\\x1B|N\\x1B|bC\\x1B|3C\\x1B|cAMoney Center\n";
         String subtitle = "\\x1B|cA\\x1B|3C\\x1B|bCCódigo de pago\n";
-
-
+        double totalAmount = 0;
+        System.out.println("PRUEBA");
+        System.out.println(title);
         try
         {
 
             device.printNormal(POS.PTR_S_RECEIPT,date);
             device.printNormal(POS.PTR_S_RECEIPT,title);
             device.printNormal(POS.PTR_S_RECEIPT,subtitle);
-            for (int i=0; i< services.size() ; i++)
-            {
-                ServicesByCarMoneyCenter service = services.get(i);
-                String serviceInfo = "\\x1B|N\\x1B|bC\\x1B|3C\\x1B|cA"+ service.getServiceName() + "  "+
-                        service.getAccountNumber() + "/" + service.getAmount() + "\n";
-                device.printNormal(POS.PTR_S_RECEIPT, serviceInfo);
 
-            }
             // Use transactionPrint to buffer receipt data until it should be printed.
             device.transactionPrint(POS.PTR_S_RECEIPT,POS.PTR_TP_TRANSACTION);
             device.printNormal(POS.PTR_S_RECEIPT,
-                    "\\x1B|bC\\x1B|cAMuestre este código al cajero en la tienda\n\\x1B|bC\\x1B|cApara pagar tus servicios.\n\n");
+                    "\\x1B|bC\\x1B|cAMuestre este código al cajero en la tienda\n\\x1B|bC\\x1B|cApara pagar tus servicios.\n");
 
-            // barcode
             if(idBarcodeService != null){
+                device.printNormal(POS.PTR_S_RECEIPT, "\\x1B|N\\x1B|bC\\x1B|3C\\x1B|cAServicios\n");
                 device.printBarCode(POS.PTR_S_RECEIPT,
                         idBarcodeService, POS.PTR_BCS_Code128,
                         100, 2, POS.PTR_BC_CENTER, POS.PTR_BC_TEXT_ABOVE);
             }
             if(idBarcodeCharge != null){
+                device.printNormal(POS.PTR_S_RECEIPT, "\\x1B|N\\x1B|bC\\x1B|3C\\x1B|cARecargas\n");
                 device.printBarCode(POS.PTR_S_RECEIPT,
                         idBarcodeCharge, POS.PTR_BCS_Code128,
                         100, 2, POS.PTR_BC_CENTER, POS.PTR_BC_TEXT_ABOVE);
             }
+            device.printNormal(POS.PTR_S_RECEIPT, "\\x1B|N\\x1B|bC\\x1B|3C\\x1B|cA_____________________________\n");
+            // barcode
+            for (int i=0; i< services.size() ; i++)
+            {
+                ServicesByCarMoneyCenter service = services.get(i);
+                String serviceInfo = "\\x1B|bC\\x1B|cA"+ service.getServiceName() + " "+
+                        service.getAccountNumber() + "  " +  localService.getCurrency() + service.getAmount() + "\n";
+                totalAmount += Double.parseDouble(service.getAmount());
+                device.printNormal(POS.PTR_S_RECEIPT, serviceInfo);
+            }
+            String total = "\\x1B|bC\\x1B|cA Total: " + localService.getCurrency() + totalAmount;
+            device.printNormal(POS.PTR_S_RECEIPT, total );
+            device.printNormal(POS.PTR_S_RECEIPT, "\\x1B|N\\x1B|bC\\x1B|3C\\x1B|cA_____________________________\n");
 
             // Receipt footer.
 
             // Print Normal
-            device.printNormal(POS.PTR_S_RECEIPT, "\\x1B|cA Este tiquete no es una factura\n\n");
-            device.printNormal(POS.PTR_S_RECEIPT, "\\x1B|cA Válido por el día de hoy\n\n");
+            device.printNormal(POS.PTR_S_RECEIPT, "\\x1B|cA Este tiquete no es una factura\n");
+            device.printNormal(POS.PTR_S_RECEIPT, "\\x1B|cA Válido por el día de hoy\n");
             // Paper cut
             device.printNormal(POS.PTR_S_RECEIPT, "\\x1B|fP");
 

@@ -121,22 +121,18 @@ public class ShoppingCartActivity extends AppCompatActivity {
 
     private void goToPaymentCode(ArrayList<ConsultCodBarMoneyCenter> codes){
         Intent intent = new Intent(this,PaymentCodeActivity.class);
-
-        for(int j=0;j<codes.size();j++){
-            List<ConsultCodBarMoneyCenter.CodBars> codBars= codes.get(j).getCodBars();
-            for(int i=0;i<codBars.size();i++){
-                if(codBars.get(i).getServiceType()==1){
-                    intent.putExtra("codService",codBars.get(i).getBarcodeimg());
+        for(int j=0;j<codes.size();j++) {
+            List<ConsultCodBarMoneyCenter.CodBars> codBars = codes.get(j).getCodBars();
+            for (int i = 0; i < codBars.size(); i++) {
+                if (codBars.get(i).getServiceType() == 1) {
+                    intent.putExtra("codService", codBars.get(i).getBarcodeimg());
                     intent.putExtra("idBarcodeService", codBars.get(i).getIdBarcode());
-                }else{
-                    intent.putExtra("codRecharge",codBars.get(i).getBarcodeimg());
+                } else {
+                    intent.putExtra("codRecharge", codBars.get(i).getBarcodeimg());
                     intent.putExtra("idBarcodeCharge", codBars.get(i).getIdBarcode());
                 }
-
-
             }
         }
-
         intent.putExtra("dateExp",codes.get(0).getExpirantionDateCodBar());
         startActivity(intent);
     }
