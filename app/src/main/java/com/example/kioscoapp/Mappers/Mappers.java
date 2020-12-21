@@ -19,11 +19,12 @@ public class Mappers {
         services.setCustomerName(consult.getCustomerName());
         services.setFormatId(consult.getFormatId());
         services.setPosition(position);
-        services.setServiceType("");//TODO cambiar
+        services.setServiceType("1");//TODO cambiar
         services.setUrlImgService("");//TODO cambiar
         services.setDateCreate(consult.getDateCreate());
         services.setDateExpiration(consult.getDateExpiration());
         services.setTr_Id(consult.getTr_Id());
+        services.setTiempoAire(false);
         return services;
     }
 
@@ -39,11 +40,12 @@ public class Mappers {
         services.setServiceId(consult.getService_Id());
         services.setCustomerName("");//TODO PREGUNTAR
         services.setFormatId(consult.getFormat_Id());
-        services.setServiceType("");//TODO cambiar
+        services.setServiceType("2");//TODO cambiar
         services.setUrlImgService("");//TODO cambiar
         services.setDateCreate(consult.getDateCreate());
         services.setDateExpiration("");//TODO PREGUNTAR
         services.setTr_Id(consult.getItemNumber());
+        services.setTiempoAire(true);
         return services;
     }
 }
