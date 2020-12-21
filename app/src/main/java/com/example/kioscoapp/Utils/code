@@ -1,0 +1,67 @@
+ private void PrinterReceipt(String logicalDeviceName)
+    {
+        // Receipt content
+        String content = "\\x1B|N\\x1B|bC\\x1B|3C\\x1B|cATICKET STORE\n";
+        content +=       "\\x1B|N\\x1B|cAMMM/DD/YY  HH:MM\n\n";
+        content +=       "\\x1B|cA\\x1B|bCStore Number:\\x1B|N 8888\n";
+        content +=       "\\x1B|cA\\x1B|bCSeller:\\x1B|N Your Name\n\n";
+        content +=       "\\x1B|cAItem 1 .................... $20\n";
+        content +=       "\\x1B|cAItem 2 .................... $30\n";
+        content +=       "\\x1B|cAItem 3 .................... $40\n";
+        content +=       "\\x1B|cAItem 4 .................... $50\n";
+        content +=       "\\x1B|cAItem 5 .................... $60\n";
+        content +=       "\\x1B|cAItem 6 .................... $70\n";
+        content +=       "\\x1B|cAItem 7 .................... $80\n";
+        content +=       "\n";
+        content +=       "\\x1B|cA\\x1B|3C\\x1B|bCAmount .................... $350\n";
+        content +=       "\\x1B|cA\\x1B|NCreditCard (####-####-####-####)\n";
+        content +=       "\\x1B|cATAXES INCLUDED\n\n";
+
+        /* https://developer.android.com/guide/topics/resources/providing-resources#ResourcesFromCode */
+        Bitmap logo = BitmapFactory.decodeResource(getResources(), R.raw.sqtoshiba_gif);
+        Bitmap logoMem = BitmapFactory.decodeResource(getResources(), R.raw.sale);
+
+        try
+        {
+            // Use transactionPrint to buffer receipt data until it should be printed.
+            device.transactionPrint(POS.PTR_S_RECEIPT,POS.PTR_TP_TRANSACTION);
+
+            // logo
+            device.printBitmap(POS.PTR_S_RECEIPT, logo, POS.PTR_BM_ASIS, POS.PTR_BC_CENTER);
+
+            // content
+            device.printNormal(POS.PTR_S_RECEIPT, content);
+
+            // barcode
+            device.printBarCode(POS.PTR_S_RECEIPT, "0123456789", POS.PTR_BCS_Code39, 100, 2, POS.PTR_BC_CENTER, POS.PTR_BC_TEXT_ABOVE);
+
+            // Receipt footer.
+            device.printNormal(POS.PTR_S_RECEIPT, "\\x1B|bC\\x1B|cAThis ticket is needed for \n\\x1B|bC\\x1B|cAany return or exchange\n\n");
+
+            // Print Memory bitmap
+            TGCSMPOS4610Printer.ImageDimensions dimen = new TGCSMPOS4610Printer.ImageDimensions();
+            byte [] data = device.loadBitmap(POS.PTR_S_RECEIPT, logoMem, POS.PTR_BM_ASIS, dimen);
+
+            device.printMemoryBitmap(POS.PTR_S_RECEIPT, data, POS.PTR_BMT_GIF, POS.PTR_BM_ASIS, POS.PTR_BC_CENTER);
+
+            // Print Normal
+            device.printNormal(POS.PTR_S_RECEIPT, "\\x1B|cA THANK YOU FOR YOUR BUSINESS\n\n");
+
+            // Paper cut
+            device.printNormal(POS.PTR_S_RECEIPT, "\\x1B|fP");
+
+            // Finish transactionPrint to actually print receipt.
+            device.transactionPrint(POS.PTR_S_RECEIPT,POS.PTR_TP_NORMAL);
+
+        }
+        catch (TGCSMPOSException mpos_e)
+        {
+            mpos_e.printStackTrace();
+            Log.d("DemoApp", "Exception: " + mpos_e.getMessage());
+        }
+        catch (RuntimeException e)
+        {
+            e.printStackTrace();
+            Log.d("DemoApp", "Exception: " + e.getMessage());
+        }
+    }
