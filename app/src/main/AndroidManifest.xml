@@ -21,6 +21,7 @@
                 <action android:name="android.hardware.usb.action.USB_DEVICE_DETACHED" />
             </intent-filter>
         </activity>
+
         <activity android:name=".ShoppingCartActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
