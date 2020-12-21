@@ -136,15 +136,35 @@ public class ShoppingCartActivity extends AppCompatActivity {
 
 
     private void deleteService(ServicesByCarMoneyCenter service){
+        boolean flag=true;
         CarLocalService carLocalService= new CarLocalService(this);
-        ArrayList<ServicesByCarMoneyCenter> services=carLocalService.deleteServicesCar(service);
-        getTotal(services);
-        lvShoppingCart.setAdapter(new CartAdapter(this, services, new CartAdapter.OnListener() {
-            @Override
-            public void onClickDelete(ServicesByCarMoneyCenter services) {
-                deleteService(services);
+        ArrayList<ServicesByCarMoneyCenter> services=carLocalService.getItemsCar();
+        if (service.getPosition()>-1){
+            for (ServicesByCarMoneyCenter item:services
+            ) {
+                flag=item.isPossibleToDelete(service.getPosition());
+                if(!flag){
+                    break;
+                }
             }
-        }));
+        }else{
+            flag=true;
+        }
+
+
+        if(flag){
+            ArrayList<ServicesByCarMoneyCenter> servicesd=carLocalService.deleteServicesCar(service);
+            getTotal(servicesd);
+            lvShoppingCart.setAdapter(new CartAdapter(this, servicesd, new CartAdapter.OnListener() {
+                @Override
+                public void onClickDelete(ServicesByCarMoneyCenter services) {
+                    deleteService(services);
+                }
+            }));
+        }else{
+            Toast.makeText(this,"Debe eliminar el carrito de facturas en orden cronologico de la mas reciente a mas antigua", Toast.LENGTH_LONG).show();
+        }
+
     }
 
 

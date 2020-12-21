@@ -26,6 +26,7 @@ import com.example.kioscoapp.Model.TiempoAire;
 import com.example.kioscoapp.R;
 import com.example.kioscoapp.Services.CategoryMoneyCenterService;
 import com.example.kioscoapp.Services.Local.CarLocalService;
+import com.example.kioscoapp.Services.Local.CountryLocalService;
 import com.example.kioscoapp.Services.ServiceConsult;
 import com.example.kioscoapp.Services.TiempoAireService;
 
@@ -121,7 +122,8 @@ public class TiempoAireFragment extends Fragment {
             @Override
             public void onItemClick(TiempoAire service) {
                 CarLocalService carLocalService= new CarLocalService(getContext());
-                carLocalService.addServicesToCar(Mappers.Map(service,invoiceNumber,providerName,openPayment));
+                CountryLocalService countryLocalService= new CountryLocalService(getContext());
+                carLocalService.addServicesToCar(Mappers.Map(service,invoiceNumber,providerName,openPayment,countryLocalService.getCurrency()));
                 mlistener.changeTotalTiempoAire();
                 Toast.makeText(getContext(),"Servicio agregado exitosamente",Toast.LENGTH_LONG).show();
             }

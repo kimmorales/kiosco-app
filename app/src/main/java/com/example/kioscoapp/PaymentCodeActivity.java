@@ -1,9 +1,12 @@
 package com.example.kioscoapp;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Build;
 import android.os.Bundle;
 
 
@@ -39,6 +42,7 @@ public class PaymentCodeActivity extends AppCompatActivity {
 
     WebView webViewService,webViewRecharge;
     Button buttonPrint;
+    private static final int REQUEST_CODE_ASK_PERMISSIONS = 123;
     boolean error;
     public static final String LOGFILE_PATH =
             Environment.getExternalStorageDirectory().getPath().toString()+
@@ -203,6 +207,8 @@ public class PaymentCodeActivity extends AppCompatActivity {
     }
 
 
+
+
     /*
      * This method demonstrates the use of printer methods supported by the TGCSMPOS API to
      * print a sample receipt.
@@ -277,6 +283,7 @@ public class PaymentCodeActivity extends AppCompatActivity {
             Log.d("DemoApp", "Exception: " + e.getMessage());
         }
     }
+
 
     /**
      * initializing the Driver log mechanism

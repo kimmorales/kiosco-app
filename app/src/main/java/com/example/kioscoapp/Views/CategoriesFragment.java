@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 import android.widget.SearchView;
 
@@ -38,6 +39,7 @@ public class CategoriesFragment extends Fragment {
     private static final String ARG_PARAM2 = "param2";
     RecyclerView recyclerViewCat;
     EditText searchView;
+    FrameLayout frameLayoutNotFound;
     OnListener mlistener;
     private ProgressBar loadingCategories;
 
@@ -73,9 +75,15 @@ public class CategoriesFragment extends Fragment {
             @Override
             public void onResponse(Call<ResponseCategories> call, Response<ResponseCategories> response) {
 
-                if(response.isSuccessful() && response.body().getData().size()>0){
+                if(response.isSuccessful() && response.body().getData()!=null){
+                    frameLayoutNotFound.setVisibility(View.GONE);
                     loadingCategories.setVisibility(View.GONE);
+                    recyclerViewCat.setVisibility(View.VISIBLE);
                     setCategories(response.body().getData());
+                }else{
+                    loadingCategories.setVisibility(View.GONE);
+                    recyclerViewCat.setVisibility(View.GONE);
+                    frameLayoutNotFound.setVisibility(View.VISIBLE);
                 }
 
             }
@@ -122,6 +130,7 @@ public class CategoriesFragment extends Fragment {
         recyclerViewCat=v.findViewById(R.id.rvCategories);
         GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 2);
         recyclerViewCat.setHasFixedSize(true);
+        frameLayoutNotFound=v.findViewById(R.id.flNotFound1);
         recyclerViewCat.setLayoutManager(layoutManager);
         searchView=v.findViewById(R.id.svCategories);
         loadingCategories = v.findViewById(R.id.loading_categories);

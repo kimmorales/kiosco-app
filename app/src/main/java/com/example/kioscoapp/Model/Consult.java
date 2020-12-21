@@ -17,6 +17,15 @@ public class Consult {
     private String amount;
     private String dateExpiration;
     private String dateCreate;
+    private boolean isAdded;
+
+    public boolean isAdded() {
+        return isAdded;
+    }
+
+    public void setAdded(boolean added) {
+        isAdded = added;
+    }
 
     public String getCountryCode() {
         return countryCode;
