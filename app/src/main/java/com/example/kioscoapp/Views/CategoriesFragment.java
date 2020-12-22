@@ -12,14 +12,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.SearchView;
+import android.widget.Toast;
 
 import com.example.kioscoapp.Adapter.CategoriesAdapter;
 import com.example.kioscoapp.Model.CategoriesMoneyCenter;
 import com.example.kioscoapp.Model.ResponseCategories;
+import com.example.kioscoapp.Model.ResponseServicesByName;
+import com.example.kioscoapp.Model.ServiceByNameMoneyCenter;
 import com.example.kioscoapp.R;
 import com.example.kioscoapp.Services.CategoryMoneyCenterService;
+import com.example.kioscoapp.Services.ProviderServiceByName;
 
 import java.util.ArrayList;
 
@@ -39,6 +44,7 @@ public class CategoriesFragment extends Fragment {
     private static final String ARG_PARAM2 = "param2";
     RecyclerView recyclerViewCat;
     EditText searchView;
+    ImageButton imageButton;
     FrameLayout frameLayoutNotFound;
     OnListener mlistener;
     private ProgressBar loadingCategories;
@@ -131,15 +137,47 @@ public class CategoriesFragment extends Fragment {
         GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 2);
         recyclerViewCat.setHasFixedSize(true);
         frameLayoutNotFound=v.findViewById(R.id.flNotFound1);
+        imageButton=v.findViewById(R.id.btnSearchService);
         recyclerViewCat.setLayoutManager(layoutManager);
         searchView=v.findViewById(R.id.svCategories);
         loadingCategories = v.findViewById(R.id.loading_categories);
+        imageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                searchService();
+            }
+        });
         getCategories();
         return  v;
     }
 
+    private void searchService(){
+        loadingCategories.setVisibility(View.VISIBLE);
+        if(!searchView.getText().toString().equals("")){
+            ProviderServiceByName providerServiceByName= new ProviderServiceByName();
+            providerServiceByName.loadServicesWithDescription(getContext(),searchView.getText().toString()).enqueue(new Callback<ResponseServicesByName>() {
+                @Override
+                public void onResponse(Call<ResponseServicesByName> call, Response<ResponseServicesByName> response) {
+                    ArrayList<ServiceByNameMoneyCenter> items=response.body().getData();
+                    loadingCategories.setVisibility(View.GONE);
+                    mlistener.goFindServices(items);
+
+                }
+
+                @Override
+                public void onFailure(Call<ResponseServicesByName> call, Throwable t) {
+                    loadingCategories.setVisibility(View.GONE);
+                }
+            });
+
+        }else{
+            Toast.makeText(getContext(),"Porfavor digite el servicio a buscar",Toast.LENGTH_LONG).show();
+        }
+    }
+
     public interface OnListener {
         void goProvidersActivity(String id, String categoryName);
+        void goFindServices(ArrayList<ServiceByNameMoneyCenter> services);
         void goToNotFound();
     }
 }

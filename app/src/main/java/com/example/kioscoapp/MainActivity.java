@@ -16,6 +16,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.example.kioscoapp.ApiRest.Constants;
+import com.example.kioscoapp.Model.ServiceByNameMoneyCenter;
 import com.example.kioscoapp.Services.Local.CarLocalService;
 import com.example.kioscoapp.Services.Local.CountryLocalService;
 import com.example.kioscoapp.Services.Timer.MyCountDownTimer;
@@ -29,6 +30,7 @@ import com.example.kioscoapp.Views.ProvidersActivity;
 import com.example.kioscoapp.Views.ServicesConsultFragment;
 import com.example.kioscoapp.Views.TiempoAireFragment;
 
+import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -234,7 +236,12 @@ public class MainActivity extends AppCompatActivity implements
 
     @Override
     public void goProvidersActivity(String id, String categoryName) {
-        changeFragment(ProvidersActivity.newInstance(id,categoryName),true);
+        changeFragment(ProvidersActivity.newInstance(id,categoryName,new ArrayList<ServiceByNameMoneyCenter>()),true);
+    }
+
+    @Override
+    public void goFindServices(ArrayList<ServiceByNameMoneyCenter> services) {
+        changeFragment(ProvidersActivity.newInstance("","",services),true);
     }
 
     @Override

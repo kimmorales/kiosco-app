@@ -27,6 +27,13 @@ public interface ApiService {
     @GET("countries")
     Call<GeneralResponse<Country>> getCountries();
 
+    @GET("servicesByName")
+    Call<ResponseServicesByName> getServicesWithName(@Query("countryID") String countryId,
+                                                     @Query("formatID") String formatId,
+                                                     @Query("descripcion") String description,
+                                                     @Query("visible") String visible);
+
+
     @GET("formats")
     Call<GeneralResponse<Format>> getFormats();
 

@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.kioscoapp.Adapter.ProviderAdapter;
+import com.example.kioscoapp.Model.CategoriesMoneyCenter;
 import com.example.kioscoapp.Model.ResponseServicesByName;
 import com.example.kioscoapp.Model.ServiceByNameMoneyCenter;
 import com.example.kioscoapp.R;
@@ -32,6 +33,8 @@ public class ProvidersActivity extends Fragment {
     public static final Integer SELECTED_IMAGE = null;
     private static final String ARG_PARAM1 = "param1";
     private static final String CATEGORY_NAME = "categoryName";
+    private static final String SERVICES_SEARCHED = "servicesSearched";
+    private ArrayList<ServiceByNameMoneyCenter> servicesFound=new ArrayList<>();
     RecyclerView recyclerViewCat;
     OnListener mlistener;
 
@@ -51,16 +54,27 @@ public class ProvidersActivity extends Fragment {
      * @return A new instance of fragment CategoriesFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static ProvidersActivity newInstance(String id, String categoryName) {
+    public static ProvidersActivity newInstance(String id, String categoryName,ArrayList<ServiceByNameMoneyCenter> services) {
         ProvidersActivity fragment = new ProvidersActivity();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, id);
         args.putString(CATEGORY_NAME, categoryName);
+        args.putParcelableArrayList(SERVICES_SEARCHED,services);
         fragment.setArguments(args);
         return fragment;
     }
 
     public  void getCategories(){
+
+        if(servicesFound==null){
+            loadingProviders.setVisibility(View.GONE);
+            notFoundData.setVisibility(View.VISIBLE);
+            return;
+        }else if(servicesFound.size()>0){
+            setCategories(servicesFound);
+            loadingProviders.setVisibility(View.GONE);
+            return;
+        }
         ProviderServiceByName providerServiceByName=new ProviderServiceByName();
         providerServiceByName.loadServicesByName(getContext(),mParam1).enqueue(new Callback<ResponseServicesByName>() {
             @Override
@@ -106,6 +120,7 @@ public class ProvidersActivity extends Fragment {
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             categoryName = getArguments().getString(CATEGORY_NAME);
+            servicesFound=getArguments().getParcelableArrayList(SERVICES_SEARCHED);
         }
     }
 
