@@ -20,11 +20,18 @@ public class ProviderServiceByName {
         this.restApiAdapter = new RestAdapter();
     }
 
+    public Call<ResponseServicesByName> loadServicesWithDescription(Context context, String description){
+        ApiService service = restApiAdapter.getClientService();
+        CountryLocalService localService= new CountryLocalService(context);
+        Call<ResponseServicesByName> categories = service.getServicesWithName(localService.getCountry(),localService.getFormat(),description,"1");
+        return categories;
+    }
     public Call<ResponseServicesByName> loadServicesByName(Context context, String categoryId){
         ApiService service = restApiAdapter.getClientService();
         CountryLocalService localService= new CountryLocalService(context);
         Call<ResponseServicesByName> categories = service.getServicesByName(localService.getCountry(),localService.getFormat(),categoryId,"1", Constants.ENV);
         return categories;
     }
+
 }
 

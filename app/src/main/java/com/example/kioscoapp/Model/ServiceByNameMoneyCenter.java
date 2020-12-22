@@ -1,6 +1,9 @@
 package com.example.kioscoapp.Model;
 
-public class ServiceByNameMoneyCenter {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class ServiceByNameMoneyCenter implements Parcelable {
     private  String Country_Code;
     private long  Format_Id;
     private  String Commerce_Id_WM;
@@ -14,6 +17,20 @@ public class ServiceByNameMoneyCenter {
     private  String Visible_Kiosko;
     private  String Is_Tiempo_Aire;
     private  String respondeCode;
+
+    public ServiceByNameMoneyCenter(Parcel in) {
+        super();
+        readFromParcel(in);
+    }
+
+    public static final Parcelable.Creator<ServiceByNameMoneyCenter> CREATOR = new Parcelable.Creator<ServiceByNameMoneyCenter>() {
+        public ServiceByNameMoneyCenter createFromParcel(Parcel in) {
+            return new ServiceByNameMoneyCenter(in);
+        }
+        public ServiceByNameMoneyCenter[] newArray(int size) {
+            return new ServiceByNameMoneyCenter[size];
+        }
+    };
 
     public String getCountry_Code() {
         return Country_Code;
@@ -117,5 +134,44 @@ public class ServiceByNameMoneyCenter {
 
     public void setRespondeCode(String respondeCode) {
         this.respondeCode = respondeCode;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int i) {
+        dest.writeString(Country_Code);
+        dest.writeLong(Format_Id);
+        dest.writeString(Commerce_Id_WM);
+        dest.writeString(Logo);
+        dest.writeString(Description);
+        dest.writeString(Name);
+        dest.writeString(Tag_Input_Data);
+        dest.writeString(Mask);
+        dest.writeString(Open_Payment);
+        dest.writeString(Visible_App);
+        dest.writeString(Visible_Kiosko);
+        dest.writeString(Is_Tiempo_Aire);
+        dest.writeString(respondeCode);
+
+    }
+
+    public void readFromParcel(Parcel in) {
+        Country_Code=in.readString();
+        Format_Id=in.readLong();
+        Commerce_Id_WM=in.readString();
+        Logo=in.readString();
+        Description=in.readString();
+        Name=in.readString();
+        Tag_Input_Data=in.readString();
+        Mask=in.readString();
+        Open_Payment=in.readString();
+        Visible_App=in.readString();
+        Visible_Kiosko=in.readString();
+        Is_Tiempo_Aire=in.readString();
+        respondeCode=in.readString();
     }
 }

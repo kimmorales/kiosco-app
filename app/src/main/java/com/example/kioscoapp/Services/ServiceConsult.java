@@ -26,4 +26,6 @@ public class ServiceConsult {
                 service.servicesConsultById(CountryCode,localService.getFormat(),serviceId,idCustomer,usuario);
         return services;
     }
+
+
 }
