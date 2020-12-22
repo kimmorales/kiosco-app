@@ -55,6 +55,8 @@ public class ServicesConsultFragment extends Fragment implements ConsultAdapter.
     private String serviceName;
     ProgressBar loadinServicesConsult;
     View notFoundData;
+    private String customerName;
+    TextView customerInfo;
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
@@ -85,7 +87,10 @@ public class ServicesConsultFragment extends Fragment implements ConsultAdapter.
                 response.body();
                 if(response.body().getServicesConsult() != null ){
                     loadinServicesConsult.setVisibility(View.GONE);
+                    customerName = response.body().getServicesConsult().get(0).getCustomerName();
+                    customerInfo.setText(customerName +"-" + invoiceNumber);
                     setItems(response.body().getServicesConsult(),0);
+
                 }
                 else {
                     loadinServicesConsult.setVisibility(View.GONE);
@@ -141,10 +146,9 @@ public class ServicesConsultFragment extends Fragment implements ConsultAdapter.
         recyclerViewCat.setLayoutManager(layoutManager);
         TextView serviceNameTextV = v.findViewById(R.id.serviceTypeConsult);
         TextView providerNameTextV = v.findViewById(R.id.serviceNameConsult);
-        TextView customerInfo = v.findViewById(R.id.textViewCustomerInfo);
+        customerInfo = v.findViewById(R.id.textViewCustomerInfo);
         providerNameTextV.setText(providerName);
         serviceNameTextV.setText(serviceName);
-        customerInfo.setText(invoiceNumber);
         loadinServicesConsult = v.findViewById(R.id.loading_services_consult);
         notFoundData = v.findViewById(R.id.nota_found_service_consult);
         getServiceConsultPending();
