@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="30dp"
+    tools:context=".Remittances.CheckDataFragment">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/check_data_title"
+        android:textColor="@android:color/black"
+        style="@style/subtitle">
+
+    </TextView>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/type_id"
+        android:layout_marginTop="20dp"
+        style="@style/text">
+
+    </TextView>
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/text"
+        android:enabled="false"
+        android:layout_margin="5dp"
+        android:text="Costa rica"></EditText>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/remittancer"
+        android:layout_marginTop="20dp"
+        style="@style/text"
+        >
+
+    </TextView>
+    <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:orientation="vertical">
+        <RadioButton android:id="@+id/radio_wu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/western_union"
+            style="@style/text" />
+        <RadioButton android:id="@+id/radio_vigo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/vigo"
+            style="@style/text"/>
+    </RadioGroup>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/remittancer"
+        android:layout_marginTop="20dp"
+        style="@style/text"
+        >
+
+    </TextView>
+    <Spinner
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"></Spinner>
+</LinearLayout>

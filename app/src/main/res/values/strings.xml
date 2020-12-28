@@ -5,7 +5,7 @@
     <string name="seleccione_monto">Seleccione el monto que desea recargar</string>
     <string name="cancelar">Cancelar</string>
     <string name="agregar_carrito">Agregar al carrito</string>
-    <string name="recargas" >Recargas</string>
+    <string name="recargas">Recargas</string>
     <string name="carrito_de_servicios" />
     <string name="facturas_por_pagar" />
     <string name="consultar_otro_servicio" />
@@ -18,4 +18,24 @@
     <string name="no_se_encontraron_datos">No hemos encontrado servicios asociados a la búsqueda.
         Realice nuevamente la búsqueda a utilizar las categorías.
     </string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+
+    <!-- **REMESAS**-->
+    <string name="step3_pay_info">3. Completa los datos de la remesa</string>
+    <string name="source_of_funds">Origen de los fondos</string>
+    <string name="western_union">Western Union</string>
+    <string name="vigo">VIGO</string>
+    <string name="destination_of_funds">Destino de los fondos</string>
+    <string name="type_relentionship">Tipo de relación con el beneficiario</string>
+    <string name="validate">Validar</string>
+    <string name="check_data_title">1. Verifiquemos tus datos </string>
+    <string name="remittancer">Remesedora</string>
+    <string name="type_id">Tipo de identificación</string>
+    <string name="number_id">Número de identificación</string>
+    <string name="country">País</string>
+
+
+
 </resources>
